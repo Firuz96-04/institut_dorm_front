@@ -20,6 +20,11 @@ const router = createRouter({
                     component: () => import('@/views/Free.vue')
                 },
                 {
+                    path: '/booking',
+                    name: 'booking',
+                    component: () => import('@/views/Tenat.vue')
+                },
+                {
                     path: '/student',
                     name: 'student',
                     component: () => import('@/views/Student.vue')

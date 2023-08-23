@@ -8,7 +8,29 @@ const { layoutConfig, onMenuToggle } = useLayout();
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
 const router = useRouter();
-
+const items = ref([
+    {
+        label: 'Options',
+        items: [
+            {
+                label: 'Update',
+                icon: 'pi pi-refresh',
+                command: () => {
+                    toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+                }
+            },
+            {
+                label: 'Delete',
+                icon: 'pi pi-times',
+                command: () => {
+                    console.log('message');
+                    toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
+                }
+            }
+        ]
+    },
+   
+]);
 onMounted(() => {
     bindOutsideClickListener();
 });
@@ -72,9 +94,6 @@ const isOutsideClicked = (event) => {
             <i class="pi pi-bars"></i>
         </button>
 
-        <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
-            <i class="pi pi-ellipsis-v"></i>
-        </button>
 
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
             <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
@@ -86,6 +105,7 @@ const isOutsideClicked = (event) => {
                 <span>Settings</span>
             </button>
         </div>
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
 </template>
 

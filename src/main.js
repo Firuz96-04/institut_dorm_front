@@ -109,10 +109,13 @@ import '@/assets/styles.scss';
 const app = createApp(App);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+{/* <i class="fa-solid fa-building-user"></i> */}
 /* import specific icons */
-import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays } from '@fortawesome/free-solid-svg-icons'
+import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse,
+     faCertificate, faCalendarDays, faBuildingUser } from '@fortawesome/free-solid-svg-icons'
 /* add icons to the library */
-library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays])
+library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate,
+             faCalendarDays, faBuildingUser])
 
 app.component('vue-icon', FontAwesomeIcon)
 

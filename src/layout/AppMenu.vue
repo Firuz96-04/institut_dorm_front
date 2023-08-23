@@ -13,6 +13,7 @@ const model = ref([
         items: [
             { label: 'Главная', icon: 'fa-house', to: '/' },
             { label: 'Заселить', icon: 'fa-calendar-days', to: '/free' },
+            { label: 'Жильцы ', icon: 'fa-building-user', to: '/booking' },
             { label: 'Комнаты', icon: 'fa-door-closed', to: '/room' },
             { label: 'Здание', icon: 'fa-hotel', to: '/building' },
             { label: 'Студенты', icon: 'fa-users', to: '/student' },
