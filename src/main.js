@@ -1,7 +1,8 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-
+import { createPinia } from 'pinia'
+const pinia = createPinia()
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import PrimeVue from 'primevue/config';
@@ -106,17 +107,13 @@ import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
 
+import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser } from '@fortawesome/free-solid-svg-icons';
+library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser]);
+
 const app = createApp(App);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-{/* <i class="fa-solid fa-building-user"></i> */}
-/* import specific icons */
-import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse,
-     faCertificate, faCalendarDays, faBuildingUser } from '@fortawesome/free-solid-svg-icons'
-/* add icons to the library */
-library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate,
-             faCalendarDays, faBuildingUser])
-
+app.use(pinia)
 app.component('vue-icon', FontAwesomeIcon)
 
 app.use(router)
