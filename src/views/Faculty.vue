@@ -5,6 +5,9 @@ import { useFacultyStore } from '@/store/faculty';
 const facultyStore = useFacultyStore();
 facultyStore.facultyTotal();
 
+const show = () => {
+    console.log('kkk');
+}
 const faculties = computed(() => facultyStore.allFacultyTotal);
 </script>
 <template>
@@ -42,7 +45,7 @@ const faculties = computed(() => facultyStore.allFacultyTotal);
                 <template #body="slotProps"> {{ slotProps.data.student_count }} </template>
             </Column>
             <Column field="student_count" style="width: 150px">
-                <template #body="slotProps"> {{ slotProps.data.booking_count }} </template>
+                <template #body="slotProps" @click="show"> {{ slotProps.data.booking_count }} </template>
             </Column>
             <Column field="action" header="!!!" style="width: 80px">
                 <template #body="slotProps"> <button>22</button> </template>
@@ -68,5 +71,9 @@ const faculties = computed(() => facultyStore.allFacultyTotal);
 <style scoped>
 .p-datatable .p-column-header-content {
     align-items: center !important;
+}
+tbody tr:hover {
+  background-color: #74b13f;/* Change to your preferred color */
+  cursor: pointer;
 }
 </style>

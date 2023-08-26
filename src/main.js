@@ -106,7 +106,7 @@ import VirtualScroller from 'primevue/virtualscroller';
 import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
-
+import '@/assets/main.scss';
 import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser } from '@fortawesome/free-solid-svg-icons';
 library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser]);
 
