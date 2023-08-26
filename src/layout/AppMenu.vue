@@ -12,6 +12,7 @@ const model = ref([
         label: '',
         items: [
             { label: 'Главная', icon: 'fa-house', to: '/' },
+            { label: 'Main', icon: 'fa-house', to: '/main' },
             { label: 'Заселить', icon: 'fa-calendar-days', to: '/free' },
             { label: 'Жильцы ', icon: 'fa-building-user', to: '/booking' },
             { label: 'Комнаты', icon: 'fa-door-closed', to: '/room' },
