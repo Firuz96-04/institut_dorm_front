@@ -25,3 +25,10 @@ tbody tr:hover {
       color: #ef233c;
   }
 }
+
+.column-text-center {
+  .p-column-header-content {
+      text-align: center; // or center
+      display: block !important;
+  }
+}

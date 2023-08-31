@@ -23,28 +23,28 @@ const close = () => {
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" frozen :rowspan="2"/>
-                    <Column header="Студент" :colspan="5" frozen/>
-                    <Column header="Место проживания" :colspan="3" />
-                    <Column header="Стоимость проживания" :colspan="3" />
-                    <Column header="Дата проживания" :colspan="2" />
+                    <Column header="Студент" class="column-text-center" :colspan="5" frozen/>
+                    <Column header="Место проживания" class="column-text-center" :colspan="3" />
+                    <Column header="Стоимость проживания" class="column-text-center" :colspan="3" />
+                    <Column header="Дата проживания" class="column-text-center" :colspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Студент" field="full_name" />
-                    <Column header="Страна" field="country" />
-                    <Column header="Факультет" field="faculty" />
-                    <Column header="Курс" field="course" />
-                    <Column header="Пол" field="gender" />
+                    <Column header="Студент" class="column-text-center" field="full_name" />
+                    <Column header="Страна" class="column-text-center" field="country" />
+                    <Column header="Факультет" class="column-text-center" field="faculty" />
+                    <Column header="Курс" class="column-text-center" field="course" />
+                    <Column header="Пол" class="column-text-center" field="gender" />
                     
-                    <Column header="Здания" field="building" />
-                    <Column header="Комната" field="number" />
-                    <Column header="Этаж" field="floor" />
+                    <Column header="Здания" class="column-text-center" field="building" />
+                    <Column header="Комната" class="column-text-center" field="number" />
+                    <Column header="Этаж" class="column-text-center" field="floor" />
 
-                    <Column header="Стоимость" field="total_price" />
-                    <Column header="Оплатил" field="payed" />
-                    <Column header="Долг" field="debt" />
+                    <Column header="Стоимость" class="column-text-center" field="total_price" />
+                    <Column header="Оплатил" class="column-text-center" field="payed" />
+                    <Column header="Долг" class="column-text-center" field="debt" />
 
-                    <Column header="Начало" field="book_date" />
-                    <Column header="Конец" field="book_end" />
+                    <Column header="Начало" class="column-text-center" field="book_date" />
+                    <Column header="Конец" class="column-text-center" field="book_end" />
                 </Row>
             </ColumnGroup>
             <Column headerStyle="width:3rem" frozen>
@@ -52,32 +52,32 @@ const close = () => {
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="full_name" style="min-width: 220px" frozen>
+            <Column field="full_name" style="min-width: 220px;" frozen>
                 <template #body="{ data }"> {{ data.student.full_name }} </template>
             </Column>
-            <Column field="country" style="min-width: 170px">
+            <Column field="country" style="min-width: 170px" >
                 <template #body="{ data }"> {{ data.student.country.name }} </template>
             </Column>
             <Column field="faculty" style="min-width: 170px">
                 <template #body="{ data }"> {{ data.student.faculty.name }} </template>
             </Column>
-            <Column field="student.course" style="min-width: 70px" />
-            <Column field="student.gender" style="min-width: 100px">
+            <Column field="student.course" style="min-width: 70px" class="text-center" />
+            <Column field="student.gender" style="min-width: 100px" class="text-center">
                 <template #body="{ data }">
                     <span v-if="data.student.gender == 0"> женшина </span>
                     <span v-else>мужчиина</span>
                 </template>
             </Column>
-            <Column field="room.building" style="min-width: 150px" />
-            <Column field="room.number" style="min-width: 100px" />
-            <Column field="room.floor"  style="min-width: 100px"/>
+            <Column field="room.building" style="min-width: 150px" class="text-center" />
+            <Column field="room.number" style="min-width: 100px" class="text-center" />
+            <Column field="room.floor" style="min-width: 100px" class="text-center" />
 
-            <Column field="total_price" style="min-width: 120px"/>
-            <Column field="payed" style="min-width: 120px"/>
-            <Column field="debt" style="min-width: 120px"/>
+            <Column field="total_price" style="min-width: 120px; text-align: center" />
+            <Column field="payed" style="min-width: 120px; text-align: center" />
+            <Column field="debt" style="min-width: 120px; text-align: center" />
 
-            <Column field="book_date" style="min-width: 100px"/>
-            <Column field="book_end" style="min-width: 100px"/>
+            <Column field="book_date" style="min-width: 100px; text-align: center;"/>
+            <Column field="book_end" style="min-width: 100px; text-align: center;"/>
         </DataTable>
     </div>
 <Teleport to="body">

@@ -1,38 +1,50 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useCountryStore } from '@/store/country';
-import addModal from '@/components/modals/country/addModal.vue'
+import addModal from '@/components/modals/country/addModal.vue';
+import editModal from '@/components/modals/country/editModal.vue';
+import deleteModal from '@/components/modals/country/deleteModal.vue';
 
 const countryStore = useCountryStore();
 countryStore.countryTotal();
 
-const name = ref('')
+const name = ref('');
 
-const openAdd = ref(false)
+const openAdd = ref(false);
+const openEdit = ref(false);
+const openDelete = ref(false);
 
-const addHandle = () => openAdd.value = true
+const country = ref(null);
+const addHandle = () => (openAdd.value = true);
 const countries = computed(() => countryStore.allCountryTotal);
-const deleteHandle = () => {
 
-}
+const deleteHandle = (data) => {
+    openDelete.value = true
+    country.value = data
+};
 
 const editHandle = (data) => {
-
-}
+    openEdit.value = true;
+    country.value = JSON.parse(JSON.stringify(data));
+};
 </script>
 <template>
     <div class="card" style="width: 850px; margin: 0 auto">
-        <DataTable class="p-datatable-sm" :value="countries" showGridlines tableStyle="min-width: 50rem">
+        <DataTable class="p-datatable-sm" :value="countries" scrollable scrollHeight="500px" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" :rowspan="2" />
-                    <Column header="Страны" :rowspan="3" />
-                    <Column header="Студенты" :colspan="2" />
-                    <Column header="!!!" :rowspan="2" />
+                    <Column :rowspan="3" class="column-text-center">
+                        <template #header>
+                            <div style="display: block; text-align: center; font-size: 16px">Страны</div>
+                        </template>
+                    </Column>
+                    <Column header="Студенты" class="column-text-center" :colspan="2" />
+                    <Column header="!!!" class="column-text-center" :rowspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Кол. студентов" field="student_count" style="width: 150px" />
-                    <Column header="Заселены" field="booking_count" style="width: 150px" />
+                    <Column header="Кол. студентов" field="student_count" class="column-text-center" style="width: 150px" />
+                    <Column header="Заселены" field="booking_count" class="column-text-center" style="width: 150px" />
                 </Row>
             </ColumnGroup>
             <Column headerStyle="width:3rem">
@@ -41,14 +53,14 @@ const editHandle = (data) => {
                 </template>
             </Column>
             <Column style="width: 250px" field="name" />
-            <Column field="student_count" style="width: 150px">
+            <Column field="student_count" style="width: 150px" class="text-center">
                 <template #body="slotProps"> {{ slotProps.data.student_count }} </template>
             </Column>
-            <Column field="student_count" style="width: 150px">
+            <Column field="student_count" style="width: 150px" class="text-center">
                 <template #body="slotProps"> {{ slotProps.data.booking_count }} </template>
             </Column>
             <Column field="action" header="!!!" style="width: 80px">
-                <template #body="{data}"> 
+                <template #body="{ data }">
                     <div class="action_style">
                         <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />
                         <vue-icon class="action_style__delete" @click="deleteHandle(data)" icon="fa-solid fa-trash-can" />
@@ -82,14 +94,15 @@ const editHandle = (data) => {
         </DataTable>
     </div>
     <Teleport to="body">
-            <addModal :visible="openAdd"  @close="openAdd=false"/>
+        <addModal :visible="openAdd" @close="openAdd = false" />
+        <editModal :visible="openEdit" :country_data="country" @close="openEdit = false" />
+        <deleteModal :visible="openDelete" :country="country" @close="openDelete = false" />
     </Teleport>
 </template>
 
 <style lang="scss" scoped>
-
-.header_block{
+.header_block {
     display: flex;
     justify-content: space-between;
-}   
+}
 </style>

@@ -29,6 +29,13 @@ export const useCountryStore = defineStore('country', {
             this.country_total = data.data;
             this.total = data.totals;
         },
+
+        
+    //    async editCountry(obj) {
+
+    //     },
+
+
         async addCountry(obj) {
             console.log(obj);
             try {
