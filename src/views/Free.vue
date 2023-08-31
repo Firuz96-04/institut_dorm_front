@@ -5,37 +5,81 @@ import { useBuildingStore } from '@/store/building';
 import freeModal from '@/components/modals/free/freeModal.vue';
 const freeStore = useFreePlaceStore();
 const buildStore = useBuildingStore()
+const floors = ref([])
+const floor_state = ref(true)
 
-const freeFilter = ({
+const free_places = computed(() => freeStore.getAllFreePlace);
+const buildings = computed(() => buildStore.allBuilding)
+let timeout;
+const freeFilter = ref({
     building: null,
     floor: null,
-    is_full: null
+    is_full: null,
+    place: null,
+    room: null
 })
+
+const status_list = ref([
+    {name: 'свободные', code: 0},
+    {name: 'занаятие', code: 1,}  
+])
+const free_place = ref([
+    {name: '1', code: 1},
+    {name: '2', code: 2,},
+    {name: '3', code: 3},
+    {name: '4', code: 4,}  
+])
 const freeData = ref({});
 freeStore.setAllFreePlace();
 
 const visible = ref(false);
 
-const selectedCity = ref(null);
 
 const buildHandle = (e) => {
-    const {code} = e.value
-    const floor = JSON.parse(JSON.stringify(buildStore))
-    console.log(floor, 'eee');
-    console.log(code);
-        // console.log(e.value, 'event');
+    if (e.value) {
+        console.log(e.value);
+        floor_state.value = false
+        const build = buildings.value.filter(item => item.id == e.value)
+        const res = JSON.parse(JSON.stringify(build))
+        const floor = res[0].floor_count
+        freeStore.setAllFreePlace(freeFilter.value);
+        floors.value = []
+        for (let i = 1; i <= floor; i++) {
+            floors.value.push({name: i, code: i})
+            }
+
+    }
+    else {
+        freeFilter.value.floor = null
+        floor_state.value = true
+        freeStore.setAllFreePlace(freeFilter.value);
+        }
 }
 
+const filterHandle = (e) => {
+    console.log('event');
+    console.log(e.value);
+    freeStore.setAllFreePlace(freeFilter.value);
+};
+
+const searchRoom = (e) => {
+    if (timeout) {
+    clearTimeout(timeout);
+    timeout = null;
+  }
+  timeout = setTimeout(() => {
+    freeStore.setAllFreePlace(freeFilter.value);
+  }, 500);
+}
 const freePlace = (obj) => {
-    console.log(obj);
     freeData.value = JSON.parse(JSON.stringify(obj));
     visible.value = true;
 };
+
 const close = () => {
     visible.value = false;
 };
-const free_places = computed(() => freeStore.getAllFreePlace);
-const buildings = computed(() => buildStore.allBuilding)
+
 </script>
 <template>
     <div class="card my_card">
@@ -43,10 +87,10 @@ const buildings = computed(() => buildStore.allBuilding)
             <Column field="building" header="Здания" style="min-width: 150px"></Column>
             <Column field="number" headerClass="column-text-center" header="Комната" style="min-width: 60px; text-align: center"></Column>
             <Column field="floor" headerClass="column-text-center" header="Этаж" style="min-width: 50px"></Column>
-            <Column field="room_place" headerClass="column-text-center" header="Тип комнаты" style="width: 150px"></Column>
+            <Column field="room_place" headerClass="column-text-center" header="Тип комнаты" style="min-width: 100px"></Column>
 
-            <Column field="person_count" headerClass="column-text-center" header="Кол. проживаюших" style="width: 150px"></Column>
-            <Column field="free_place" headerStyle="text-align:center" header="Свободные места" bodyClass="text-center" class="width:150px"></Column>
+            <Column field="person_count" headerClass="column-text-center" header="Кол. проживаюших" style="min-width: 100px"></Column>
+            <Column field="free_place" headerStyle="text-align:center" header="Свободные места" bodyClass="text-center" style="min-width: 100px"></Column>
             <Column field="action" header="!!!" headerClass="column-text-center" style="min-width: 100px; text-align: center">
                 <template #body="{ data }">
                     <!-- <Button size="small" label="Success" severity="success" raised /> -->
@@ -56,12 +100,18 @@ const buildings = computed(() => buildStore.allBuilding)
                 </template>
             </Column>
             <template #header>
-                <div>
-                    <Dropdown v-model="freeFilter.building" @change="buildHandle" optionLabel="name" :options="buildings.map((item) => ({ name: item.name, code: item.id }))" placeholder="Здания" class="p-inputtext-sm w-full md:w-12rem" />       
-                    <Dropdown v-model="freeFilter.building" :options="buildings.map((item) => ({ name: item.name, code: item.id }))" placeholder="Здания" class="p-inputtext-sm w-full md:w-12rem" />       
+                <div class="my_filter">
+                    <Dropdown v-model="freeFilter.building" showClear @change="buildHandle" optionLabel="name" optionValue="code" :options="buildings.map((item) => ({ name: item.name, code: item.id }))" placeholder="Здания" class="p-inputtext-sm w-full md:w-12rem" />       
+                    <Dropdown v-model="freeFilter.floor" showClear @change="filterHandle" optionValue="code" :disabled="floor_state" :options="floors" optionLabel="name" class="p-inputtext-sm w-full md:w-8rem" placeholder="Этаж"></Dropdown>
+                    <Dropdown v-model="freeFilter.is_full" showClear @change="filterHandle" optionValue="code" :options="status_list" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Статус"></Dropdown>
+                    <Dropdown v-model="freeFilter.place" showClear @change="filterHandle" optionValue="code" :options="free_place" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Кол. мест"></Dropdown>
+                    <InputText type="search" v-model="freeFilter.room" @update:modelValue="searchRoom" placeholder="Комнаты" class="p-inputtext-sm w-full md:w-8rem" :maxlength="4" :clearable="true" />
+                   
                 </div>
             </template>
-            <template #footer> </template>
+            <template #footer>
+                total
+            </template>
         </DataTable>
         <Teleport to="body">
             <freeModal @close="close" :visible="visible" :data.sync="freeData"></freeModal>
@@ -70,6 +120,14 @@ const buildings = computed(() => buildStore.allBuilding)
 </template>
 
 <style lang="scss">
+.my_filter {
+    display: flex;
+    justify-content: start;
+
+    .p-dropdown {
+        margin-right: 15px;
+    }
+}
 .my_card {
     padding: 1rem;
 }

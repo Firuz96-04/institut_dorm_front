@@ -23,13 +23,13 @@ const close = () => {
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" frozen :rowspan="2"/>
-                    <Column header="Студент" :colspan="5"/>
+                    <Column header="Студент" :colspan="5" frozen/>
                     <Column header="Место проживания" :colspan="3" />
                     <Column header="Стоимость проживания" :colspan="3" />
                     <Column header="Дата проживания" :colspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Студент" field="full_name" frozen/>
+                    <Column header="Студент" field="full_name" />
                     <Column header="Страна" field="country" />
                     <Column header="Факультет" field="faculty" />
                     <Column header="Курс" field="course" />

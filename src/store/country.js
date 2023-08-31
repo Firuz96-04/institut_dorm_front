@@ -32,7 +32,7 @@ export const useCountryStore = defineStore('country', {
         async addCountry(obj) {
             console.log(obj);
             try {
-                const res = await http.post('/api/country', obj.data);
+                const res = await http.post('/api/country', obj.country);
                 const data = await res.data;
                 this.country_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();

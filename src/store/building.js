@@ -15,6 +15,7 @@ export const useBuildingStore = defineStore('building', {
             const res = await http.get('/api/building');
             const data = await res.data;
             this.buildings = data;
+            console.log(this.buildings);
         },
 
         async addBuilding(obj) {

@@ -15,7 +15,7 @@ const router = createRouter({
                     component: () => import('@/views/Dashboard.vue')
                 },
                 {
-                    path: 'main',
+                    path: '/main',
                     name: 'main',
                     component: () => import('@/views/Main.vue')
                 },
@@ -23,6 +23,11 @@ const router = createRouter({
                     path: '/free',
                     name: 'free',
                     component: () => import('@/views/Free.vue')
+                },
+                {
+                    path: '/payment',
+                    name: 'payment',
+                    component: () => import('@/views/Payment.vue')
                 },
                 {
                     path: '/booking',

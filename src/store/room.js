@@ -11,8 +11,10 @@ export const useRoomStore = defineStore('room', {
     },
 
     actions: {
-        async setAllRoom() {
-            const res = await http.get('/api/room');
+        async setAllRoom(params) {
+            const res = await http.get('/api/room', {
+                params: params
+            });
             const data = await res.data;
             this.rooms = data.results;
         },

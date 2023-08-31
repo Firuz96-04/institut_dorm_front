@@ -19,7 +19,6 @@ export const useFacultyStore = defineStore('faculty', {
             const res = await http.get('/api/faculty');
             const data = await res.data;
             this.faculties = data;
-            console.log(data);
         },
 
         async facultyTotal() {
@@ -27,7 +26,6 @@ export const useFacultyStore = defineStore('faculty', {
             const data = await res.data;
             this.faculty_total = data.data;
             this.total = data.totals;
-            console.log(data);
         },
 
         async addFaculty(obj) {

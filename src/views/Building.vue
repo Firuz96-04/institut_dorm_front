@@ -7,34 +7,43 @@ buildingStore.setAllBuilding();
 
 const buildings = computed(() => buildingStore.allBuilding);
 
+
+const deleteHandle = () => {
+
+}
+
+const editHandle = (data) => {
+
+}
 const show = () => {
     console.log('kkk');
 }
 </script>
 <template>
-<DataTable :value="buildings" class="p-datatable-sm my_table" showGridlines scrollable scrollHeight="400px">
-    <Column field="name" header="Названия" style="min-width: 100px" class="font-bold my_column"></Column>
-    <!-- <Column field="floor_count" header="Этажность" style="min-width: 50px"></Column> -->
-    <Column field="address" header="Адрес" style="min-width: 200px"></Column>
-    <Column field="floor_count" header="Balance" style="min-width: 100px">
+    <div class="card my_table">
+<DataTable :value="buildings" class="p-datatable-sm " showGridlines scrollable scrollHeight="400px">
+    <Column field="name" header="Названия" style="width: 25%" class="font-bold my_column"></Column>
+    <Column field="floor_count" header="Этажность" style="width: 15%">
         <template #body="{ data }">
-            <span class="my_column"  @click="show">111</span>
+            <span class="my_column"  @click="show">{{ data.floor_count }}</span>
         </template>
     </Column>
-    <!-- <Column field="name" header="Name" style="min-width: 200px"></Column>
-    <Column field="country.name" header="Country" style="min-width: 200px"></Column>
-    <Column field="date" header="Date" style="min-width: 200px"></Column>
-    <Column field="company" header="Company" style="min-width: 200px"></Column>
-    <Column field="status" header="Status" style="min-width: 200px"></Column>
-    <Column field="activity" header="Activity" style="min-width: 200px"></Column>
-    <Column field="representative.name" header="Representative" style="min-width: 200px"></Column>
-     -->
+    <Column field="address" header="Адрес" style="width: 50%"></Column>
+    <Column field="actions" header="!!!" style="width: 80px">
+                <template #body="{data}"> 
+                    <div class="action_style">
+                        <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />
+                        <vue-icon class="action_style__delete" @click="deleteHandle" icon="fa-solid fa-trash-can" />
+                    </div>
+                </template>
+            </Column>
 </DataTable>
+</div>
 </template>
 
 <style scoped>
 .my_table {
-    width: 700px;
+    width: 850px;
     margin: 0 auto;
 }
 

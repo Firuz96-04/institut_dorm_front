@@ -1,6 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useFacultyStore } from '@/store/faculty';
+import addModal from '@/components/modals/faculty/addModal.vue'
+import editModal from '@/components/modals/faculty/editModal.vue'
 
 const facultyStore = useFacultyStore();
 facultyStore.facultyTotal();
@@ -8,23 +10,35 @@ facultyStore.facultyTotal();
 const show = () => {
     console.log('kkk');
 }
+
+const faculty = ref({})
+
 const faculties = computed(() => facultyStore.allFacultyTotal);
+const name = ref()
+
+const openAdd = ref(false)
+const openEdit = ref(false)
+
+const addHandle = () => openAdd.value = true
+const editHandle = (data) => {
+
+    faculty.value = JSON.parse(JSON.stringify(data))
+    openEdit.value = true
+}
+const deleteHandle = () => {
+    alert('delete')
+}
+
 </script>
 <template>
     <div class="card" style="width: 850px; margin: 0 auto">
         <DataTable class="p-datatable-sm" :value="faculties" showGridlines tableStyle="min-width: 50rem">
-            <template #header>
-                <div class="flex flex-wrap align-items-center justify-content-between gap-2">
-                    <span class="text-xl text-900 font-bold">Products</span>
-                    <Button icon="pi pi-refresh" rounded raised />
-                </div>
-            </template>
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" :rowspan="2" />
                     <Column :rowspan="3">
                         <template #header>
-                            <div style="display: block; text-align: center; color: #e42626; font-size: 18px">Факультет</div>
+                            <div style="display: block; text-align: center; color: #000; font-size: 18px">Факультет</div>
                         </template>
                     </Column>
                     <Column header="Студенты" :colspan="2" />
@@ -48,8 +62,14 @@ const faculties = computed(() => facultyStore.allFacultyTotal);
                 <template #body="slotProps" @click="show"> {{ slotProps.data.booking_count }} </template>
             </Column>
             <Column field="action" header="!!!" style="width: 80px">
-                <template #body="slotProps"> <button>22</button> </template>
+                <template #body="{data}"> 
+                    <div class="action_style">
+                        <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />
+                        <vue-icon class="action_style__delete" @click="deleteHandle" icon="fa-solid fa-trash-can" />
+                    </div>
+                </template>
             </Column>
+            <!-- <i class="fa-solid fa-pen-to-square"></i> -->
 
             <ColumnGroup type="footer">
                 <Row>
@@ -61,14 +81,30 @@ const faculties = computed(() => facultyStore.allFacultyTotal);
                     <Column />
                 </Row>
             </ColumnGroup>
+            <template #header>
+                <div class="header_block">
+                    <div>
+                        <InputText v-model="name" class="my_input" type="search" size="small" :maxlength="10" placeholder="Факультет" />
+                    </div>
+                    <div>
+                        <Button label="Добавить" @click="addHandle" severity="secondary" size="small" text raised />
+                    </div>
+                </div>
+            </template>
             <template #footer>
                 <div>wqaeqweqwe</div>
             </template>
         </DataTable>
     </div>
+    <Teleport to="body">
+            <addModal :visible="openAdd"  @close="openAdd=false"/>
+            <editModal :visible="openEdit"  :item="faculty" @close="openEdit=false"/>
+            
+    </Teleport>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
 .p-datatable .p-column-header-content {
     align-items: center !important;
 }
@@ -76,4 +112,10 @@ tbody tr:hover {
   background-color: #74b13f;/* Change to your preferred color */
   cursor: pointer;
 }
+
+.header_block{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}  
 </style>

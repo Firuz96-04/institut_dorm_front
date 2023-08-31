@@ -15,6 +15,7 @@ const model = ref([
             { label: 'Main', icon: 'fa-house', to: '/main' },
             { label: 'Заселить', icon: 'fa-calendar-days', to: '/free' },
             { label: 'Жильцы ', icon: 'fa-building-user', to: '/booking' },
+            { label: 'Оплаты ', icon: 'fa-hand-holding-dollar', to: '/payment' },
             { label: 'Комнаты', icon: 'fa-door-closed', to: '/room' },
             { label: 'Здание', icon: 'fa-hotel', to: '/building' },
             { label: 'Студенты', icon: 'fa-users', to: '/student' },

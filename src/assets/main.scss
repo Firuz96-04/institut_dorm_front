@@ -4,3 +4,24 @@ tbody tr:hover {
     background-color: #e9ecef !important; /* Change to your preferred color */
     cursor: pointer;
   }
+
+.my_input {
+    // font-size: 14px !important;
+    padding: 0.5rem 0.5rem !important;
+}
+
+
+.action_style {
+  display: flex;
+  justify-content: space-evenly;
+
+  &__edit {
+      font-size: 18px;
+      color: #ffbe0b;
+  }
+
+  &__delete {
+      font-size: 18px;
+      color: #ef233c;
+  }
+}

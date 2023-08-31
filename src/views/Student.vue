@@ -6,18 +6,24 @@ const studentStore = useStudentStore();
 studentStore.setAllStudent();
 
 const students = computed(() => studentStore.getAllStudent);
+const student_filter = ref({
+    search: null
+})
 </script>
 
 <template>
     <div class="card test_card">
+        <div class="student_header">
+        <InputText v-model="student_filter.search" class="my_input"  placeholder="студент" />
+        </div>
         <DataTable :value="students" scrollHeight="400px" class="p-datatable-sm" scrollable showGridlines tableStyle="min-width: 50rem">
-            <Column header="#" headerStyle="width:3rem">
+            <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="name" header="Имя" style="min-width: 200px"></Column>
-            <Column field="last_name" headerStyle="text-align: right" header="Фамилия" style="min-width: 200px"></Column>
+            <Column field="name" header="Имя" style="min-width: 170px" frozen></Column>
+            <Column field="last_name" headerStyle="text-align: right" header="Фамилия" style="min-width: 150px"></Column>
             <Column field="country" header="Страна" headerClass="column-text-right" style="min-width: 200px">
                 <template #body="{data}">
                     <span> {{ data.country.name }} </span>
@@ -40,12 +46,31 @@ const students = computed(() => studentStore.getAllStudent);
                     <span v-else>мужчиина</span>
                 </template>
             </Column>
+            <Column field="actions" header="!!!" style="min-width: 90px">
+                <template #body="{data}"> 
+                    <div class="action_style">
+                        <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />
+                        <vue-icon class="action_style__delete" @click="deleteHandle" icon="fa-solid fa-trash-can" />
+                    </div>
+                </template>
+            </Column>
+            <!-- <template #header>
+                <div>Student pagination</div>
+            </template> -->
+            <template #footer>
+                <div>Student pagination</div>
+            </template>
         </DataTable>
     </div>
 </template>
 
 
 <style lang="scss">
+
+.student_header {
+    display: flex;
+    justify-content: start;
+}
   .column-text-right {
     .p-column-header-content{
       text-align: center; // or center

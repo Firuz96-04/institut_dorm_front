@@ -15,6 +15,7 @@ export const useFreePlaceStore = defineStore('free_place', {
 
     actions: {
         async setAllFreePlace(obj) {
+            console.log(obj, 'obj');
             const res = await http.get('/api/free-place', { params: obj });
             const data = await res.data;
             this.free_places = data.results;

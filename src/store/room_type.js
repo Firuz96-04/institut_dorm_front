@@ -1,0 +1,23 @@
+import { defineStore } from 'pinia';
+import { http } from '@/api/axios/interceptors';
+
+export const useRoomTypeStore = defineStore('room_type', {
+    state: () => ({
+        room_types: []
+    }),
+
+    getters: {
+        getAllRoomType: (state) => state.room_types
+    },
+
+    actions: {
+        async setAllRoomType(params) {
+            const res = await http.get('/api/room-type', {
+                params: params
+            });
+            const data = await res.data;
+            this.room_types = data;
+        },
+
+    }
+});

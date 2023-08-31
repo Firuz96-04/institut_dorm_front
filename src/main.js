@@ -107,10 +107,12 @@ import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
 import '@/assets/main.scss';
-import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser } from '@fortawesome/free-solid-svg-icons';
-library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser]);
+import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays,
+     faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, 
+    faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan]);
 
-const app = createApp(App);
+    const app = createApp(App);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 app.use(pinia)
