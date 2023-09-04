@@ -26,8 +26,9 @@ const props = defineProps({
 const closeModal = () => emits('close');
 
 const editCountry = () => {
-    countryStore.addCountry({
-        country: country.value,
+    const parse = JSON.parse(JSON.stringify(props.country_data))
+    countryStore.countryEdit({
+        country: parse,
         cb: closeModal
     })
 };

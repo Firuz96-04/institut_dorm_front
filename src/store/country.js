@@ -30,12 +30,6 @@ export const useCountryStore = defineStore('country', {
             this.total = data.totals;
         },
 
-        
-    //    async editCountry(obj) {
-
-    //     },
-
-
         async addCountry(obj) {
             console.log(obj);
             try {
@@ -44,6 +38,21 @@ export const useCountryStore = defineStore('country', {
                 this.country_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
                 console.log(data, 'data');
+            } catch (error) {
+                console.log(error);
+            }
+        },
+
+        async countryEdit(obj) {
+            try {
+                const res = await http.patch(`/api/country/${obj.country.id}`, {
+                    name: obj.country.name
+                });
+                const data = await res.data;
+                const item_id = this.allCountryTotal.findIndex(item => item.id == obj.country.id)
+                this.allCountryTotal[item_id].name = obj.country.name
+                
+                obj.cb()
             } catch (error) {
                 console.log(error);
             }

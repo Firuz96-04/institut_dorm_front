@@ -37,6 +37,21 @@ export const useFacultyStore = defineStore('faculty', {
             } catch (error) {
                 console.log(error);
             }
+        },
+
+        async facultyEdit(obj) {
+            try {
+                const res = await http.patch(`/api/faculty/${obj.faculty.id}`, {
+                    name: obj.faculty.name
+                });
+                const data = await res.data;
+                const item_id = this.allFacultyTotal.findIndex(item => item.id == obj.faculty.id)
+                this.allFacultyTotal[item_id].name = obj.faculty.name
+                
+                obj.cb()
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 });

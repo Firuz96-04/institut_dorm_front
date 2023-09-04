@@ -42,10 +42,9 @@ const completeImageUrl = computed(() => {
     justify-content: space-between;
     width: 120px;
     height: 60px;
-    border-radius: 4px;
-    padding: 4px 8px;
-
-    background-color: rgb(109, 152, 194);
+    border-radius: 5px;
+    padding: 4px 5px;
+    background-color: #5390d9;
 
     &__info {
         width: 60%;
@@ -53,16 +52,28 @@ const completeImageUrl = computed(() => {
         flex-direction: column;
         justify-content: center;
         align-items: start;
+        // background-color: rgb(114, 114, 218);
+
+        img {
+            margin-bottom: 4px;
+        }
+        div {
+            color: #fef9ef;
+            font-weight: 600;
+        }
     }
 
     &__count {
         width: 40%;
+        // background-color: #fed124;
         display: flex;
         justify-content: center;
         align-items: center;
 
         span {
             font-size: 16px;
+            color: #fef9ef;
+            font-weight: 600;
         }
     }
 }

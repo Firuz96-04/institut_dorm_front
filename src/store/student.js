@@ -18,8 +18,9 @@ export const useStudentStore = defineStore('student', {
 
     actions: {
         async setAllStudent(obj) {
+            console.log(obj, 'obj');
             const res = await http.get(`/api/student`, {
-                params: obj
+                params: {...obj}
             });
             const data = await res.data;
             this.students = data.results;
@@ -31,8 +32,9 @@ export const useStudentStore = defineStore('student', {
             try {
                 const res = await http.post('/api/student', obj.student);
                 const data = await res.data;
-                console.log(data, 'data');
-                this.students.unshift(data);
+
+                this.setAllStudent({page: 1})
+                // this.students.unshift(data);
                 obj.cb();
             } catch (error) {
                 console.log(error);
@@ -49,6 +51,8 @@ export const useStudentStore = defineStore('student', {
             facultyStore.faculties = json.data.faculty;
             countryStore.countries = json.data.country;
             // typeStore.student_types = json.data.student_type
-        }
+        },
+
+        
     }
 });

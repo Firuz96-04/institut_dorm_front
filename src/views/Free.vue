@@ -79,8 +79,13 @@ const close = () => {
 </script>
 <template>
     <div class="card my_card">
-        <DataTable :value="free_places" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
-            <Column field="building" header="Здания" style="min-width: 150px"></Column>
+        <DataTable :value="free_places" paginator :rows="5" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
+            <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
+                <template #body="slotProps">
+                    {{ slotProps.index + 1 }}
+                </template>
+            </Column>
+            <Column field="building" header="Здания" headerClass="column-text-center" style="min-width: 150px"></Column>
             <Column field="number" headerClass="column-text-center" header="Комната" style="min-width: 60px; text-align: center"></Column>
             <Column field="floor" class="column-text-center text-center" header="Этаж" style="min-width: 50px"></Column>
             <Column field="room_place" class="column-text-center text-center" header="Тип комнаты" style="min-width: 100px"></Column>

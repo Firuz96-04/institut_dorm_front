@@ -2,15 +2,20 @@
 import { computed, ref } from 'vue';
 import { useRoomStore } from '@/store/room';
 import { useBuildingStore } from '@/store/building';
+import { useRoomTypeStore } from '@/store/room_type';
 import addRoom from '@/components/modals/room/addRoom.vue';
 import editRoom from '@/components/modals/room/editRoom.vue';
+import deleteRoom from '@/components/modals/room/deleteRoom.vue';
 
 const buildStore = useBuildingStore();
 const roomStore = useRoomStore();
+const roomTypeStore = useRoomTypeStore()
 
 let timeout;
 roomStore.setAllRoom();
 buildStore.setAllBuilding();
+
+roomTypeStore.setAllRoomType()
 
 const rooms = computed(() => roomStore.getAllRoom);
 const buildings = computed(() => buildStore.allBuilding);
@@ -22,14 +27,18 @@ const room_filter = ref({
 
 const isAdd = ref(false);
 const isEdit = ref(false);
+const isDelete = ref(false)
 const room = ref({});
-console.log(buildings);
+
 const editHandle = (data) => {
     room.value = JSON.parse(JSON.stringify(data));
     isEdit.value = true;
 };
 
-const deleteHandle = (data) => {};
+const deleteHandle = (data) => {
+    isDelete.value = true
+    room.value = JSON.parse(JSON.stringify(data))
+};
 
 const addHandle = () => {
     isAdd.value = true;
@@ -53,10 +62,11 @@ const searchRoom = (e) => {
 const closeModal = () => {
     isAdd.value = false;
     isEdit.value = false;
+    isDelete.value = false
 };
 </script>
 <template>
-    <div class="card custom_card">
+    <div class="card room_card">
         <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="400px" scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
@@ -120,11 +130,12 @@ const closeModal = () => {
     <Teleport to="body">
         <addRoom :visible="isAdd" @close="closeModal" />
         <editRoom :visible="isEdit" @close="closeModal" :room="room" />
+        <deleteRoom :visible="isDelete" @close="closeModal" :room="room"/>
     </Teleport>
 </template>
 
 <style lang="scss" scoped>
-.custom_card {
+.room_card {
     padding: 1rem;
 }
 

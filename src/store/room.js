@@ -3,7 +3,8 @@ import { http } from '@/api/axios/interceptors';
 
 export const useRoomStore = defineStore('room', {
     state: () => ({
-        rooms: []
+        rooms: [],
+        pagination: []
     }),
 
     getters: {
@@ -27,6 +28,21 @@ export const useRoomStore = defineStore('room', {
                 obj.cb();
             } catch (error) {
                 console.log(error, 'error');
+            }
+        },
+
+        
+        async roomEdit(obj) {
+            try {
+                const res = await http.patch(`/api/room/${obj.room.id}`, obj.room);
+                const data = await res.data;
+                const item_id = this.rooms.findIndex(item => item.id == obj.room.id)
+                this.rooms[item_id] = data
+                console.log(data, 'room');
+                
+                obj.cb()
+            } catch (error) {
+                console.log(error);
             }
         }
     }

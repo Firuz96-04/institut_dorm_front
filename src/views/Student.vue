@@ -1,26 +1,66 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useStudentStore } from '@/store/student';
+import { useStudentTypeStore } from '@/store/student_type';
+import { useCountryStore } from '@/store/country';
+import { useFacultyStore } from '@/store/faculty';
+import deleteModal from '@/components/modals/student/deleteModal.vue'
+import addModal from '@/components/modals/student/addModal.vue'
+
 
 const studentStore = useStudentStore();
+const typeStore = useStudentTypeStore()
+const countryStore = useCountryStore()
+const facultyStore = useFacultyStore()
+
+typeStore.setAllStudentType()
+countryStore.setAllCountry()
+facultyStore.setAllFaculty()
+const student = ref(null)
+
 studentStore.setAllStudent();
 
+
+const openAdd = ref(false);
+const openEdit = ref(false);
+const openDelete = ref(false);
+
 const students = computed(() => studentStore.getAllStudent);
+const pagination = computed(() => studentStore.pagination)
+
+
 const student_filter = ref({
     search: null
 });
 
+
+const addHandle = () => {
+    openAdd.value = true
+}
+
 const deleteHandle = (data) => {
-    console.log(data);
+    const parse = JSON.parse(JSON.stringify(data))
+    student.value = parse
+    openDelete.value = true
+
 };
+
+const my_pagin = (data) => {
+    console.log(data, 'data');
+}
+
+const my_pagination = (data) => {
+    const page = data.page + 1
+    const pagination = {page}
+    console.log(data);
+    studentStore.setAllStudent(pagination);
+
+}
 </script>
 
 <template>
     <div class="card test_card">
-        <div class="student_header">
-            <InputText v-model="student_filter.search" class="my_input" placeholder="студент" />
-        </div>
-        <DataTable :value="students" scrollHeight="800px" scrollable class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
+        <DataTable :value="students" scrollHeight="800px" scrollable :rows="10" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
             <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -57,18 +97,40 @@ const deleteHandle = (data) => {
                     </div>
                 </template>
             </Column>
+            <template #header>
+                <div class="student_header">
+                    <div class="student_header__filter">
+                        <InputText v-model="student_filter.search" type="search" class="my_input" placeholder="студент" />
+                    </div>
+                    <div class="">
+                        <Button label="Добавить" @click="addHandle" size="small" raised />
+                    </div>
+                </div>
+            </template>
             <template #footer>
-                <div>Student pagination</div>
+                <div>
+                    <Paginator :rows="10" @page="my_pagination" :totalRecords="pagination.total" size="small"></Paginator>
+                    {{ pagination.total }}ssss
+                </div>
             </template>
         </DataTable>
     </div>
+    <Teleport to="body">
+        <deleteModal :visible="openDelete" :student="student" @close="openDelete = false"/>
+        <addModal :visible="openAdd" @close="openAdd = false"/>
+    </Teleport>
 </template>
 
 <style lang="scss">
 .student_header {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
+
+    &__filter{
+
+    }
 }
+
 .column-text-right {
     .p-column-header-content {
         text-align: center; // or center

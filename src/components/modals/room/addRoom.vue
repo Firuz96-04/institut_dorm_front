@@ -9,7 +9,6 @@ const buildStore = useBuildingStore()
 const roomTypeStore = useRoomTypeStore()
 const roomStore = useRoomStore()
 
-roomTypeStore.setAllRoomType()
 const buildings = computed(() => buildStore.allBuilding)
 const roomtypes = computed(() => roomTypeStore.getAllRoomType)
 
@@ -17,16 +16,7 @@ const emits = defineEmits({
     close: null
 });
 const visible = ref(false);
-
-const closeModal = () => {
-    roomState.number = null
-    roomState.building = null
-    roomState.floor = null
-    roomState.floor_count = null
-    roomState.description = ''
-    emits('close');
-};
-
+const floors = ref([])
 const isFloor = ref(true)
 const roomState = ref({
     number: null,
@@ -37,7 +27,16 @@ const roomState = ref({
 
 })
 
-const floors = ref([])
+
+const closeModal = () => {
+    roomState.value.number = null
+    roomState.value.building = null
+    roomState.value.floor = null
+    roomState.value.room_type = null
+    roomState.value.floor_count = null
+    roomState.value.description = ''
+    emits('close');
+};
 
 const addHandle = () => {
     roomStore.addRoom({
@@ -65,67 +64,56 @@ const buildHandle  = (e) => {
     
     }
 }
-
 </script>
 <template>
     <Dialog :visible="visible" @update:visible="closeModal" modal header="Добавить комнату" :style="{ width: '25vw' }">
         <form @submit.prevent="addHandle">
-            <br />
-            <div class="flex flex-column align-items-center justify-content-center text-justify">
-                    <span class="p-float-label font-medium mb-4">
-                        <InputText id="room" 
-                            v-model="roomState.number" 
-                            type="search" 
-                            size="small" 
-                            :maxlength="4"
-                            class="text-lg md:w-16rem py-2" />
-                        <label for="room">Комната</label>
-                    </span>
-                    <span class="p-float-label font-medium mb-4">
-                        <Dropdown v-model="roomState.building"
-                            :options="buildings.map((item) => ({name: item.name, code: item.id}))"
-                            optionLabel="name"
-                            optionValue="code"
-                            showClear
-                            id="building"
-                            size="small"
-                            @change="buildHandle"
-                            class="md:w-16rem p-0 my_dropdown" />
-                        <label for="building">Здания</label>
-                    </span>
-                    <span class="p-float-label font-medium mb-4">
-                        <Dropdown 
-                            v-model="roomState.floor"
-                            :options="floors.map(item => ({name: item.name, id: item.id}) )"
-                            :disabled="isFloor"
-                            optionLabel="name"
-                            optionValue="id"
-                            showClear
-                            id="floor"
-                            size="small"
-                            class="md:w-16rem my_dropdown" />
-                        <label for="floor">Этаж</label>
-                    </span>
+            
+            <div class="p-fluid">
+                <div class="field grid mt-1">
+                    <label for="number" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Комната</label>
+                    <div class="col-12 md:col-5 ml-4">
+                        <InputText id="number" v-model="roomState.number" type="search" :maxlength="4" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="building" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Здания</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <Dropdown v-model="roomState.building" :options="buildings.map(item => ({name: item.name, code: item.id}))"
+                         id="building" showClear optionLabel="name" @change="buildHandle" optionValue="code" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="floor" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Этаж</label>
+                    <div class="col-12 md:col-5 ml-4">
+                        <Dropdown v-model="roomState.floor" 
+                        :disabled="isFloor"
+                        :options="floors.map(item => ({name: item.name, code: item.id}))"
+                         id="floor" showClear optionLabel="name" optionValue="code" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="room_type" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Тип комнаты</label>
+                    <div class="col-12 md:col-5 ml-4">
+                        <Dropdown v-model="roomState.room_type" :options="roomtypes.map(item => ({name: item.place, code: item.id}))"
+                         id="room_type" showClear optionLabel="name" optionValue="code" size="small" />
+                    </div>
+                </div>              
+                <div class="field grid">
+                    <label for="description" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Описания</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <Textarea v-model="roomState.description" id="description" rows="5" cols="30" size="small" />
+                     </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-12">
+                        <Button type="submit" label="Добавить" size="small" />
+                    </div>
+                </div>
 
-                    <span class="p-float-label font-medium mb-4">
-                        <Dropdown 
-                            v-model="roomState.room_type"
-                            :options="roomtypes.map((item) => ({name: item.place, id: item.id}))"
-                            optionLabel="name"
-                            optionValue="id"
-                            showClear
-                            id="room_type"
-                            size="small"
-                            class="md:w-16rem my_dropdown" />
-                        <label for="room_type">Тип комнаты</label>
-                    </span>
-
-                    <span class="p-float-label font-medium mb-4">
-                        <Textarea v-model="roomState.description" type="text" showClear class="text-lg md:w-16rem py-2" rows="5" cols="25" />
-                        <label>Описания</label>
-                    </span>
-                <Button type="submit" label="Submit" size="small" />
             </div>
+
+
         </form>
     </Dialog>
 </template>

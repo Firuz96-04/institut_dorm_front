@@ -14,17 +14,14 @@ const props = defineProps({
     }
 });
 const visible = ref(false);
-const faculty = ref({
-    name: null
-});
 
-const closeModal = () => {
-    faculty.value.name = null;
-    emits('close');
-};
+
+const closeModal = () => emits('close');
+
 const addFaculty = () => {
-    facultyStore.addFaculty({
-        faculty: faculty.value,
+    const parse = JSON.parse(JSON.stringify(props.item))
+    facultyStore.facultyEdit({
+        faculty: parse,
         cb: closeModal
     });
 };
