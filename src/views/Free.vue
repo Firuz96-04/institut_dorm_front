@@ -21,7 +21,7 @@ const freeFilter = ref({
 
 const status_list = ref([
     { name: 'свободные', code: 0 },
-    { name: 'занаятие', code: 1 }
+    { name: 'занятие', code: 1 }
 ]);
 const free_place = ref([
     { name: '1', code: 1 },
@@ -79,7 +79,7 @@ const close = () => {
 </script>
 <template>
     <div class="card my_card">
-        <DataTable :value="free_places" paginator :rows="5" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
+        <DataTable :value="free_places" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
             <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -118,7 +118,14 @@ const close = () => {
                     <InputText type="search" v-model="freeFilter.room" @update:modelValue="searchRoom" placeholder="Комнаты" class="p-inputtext-sm w-full md:w-8rem" :maxlength="4" :clearable="true" />
                 </div>
             </template>
-            <template #footer> total </template>
+            <template #footer>
+                <div class="main_footer">
+                    <div class="main_footer__pagination">1</div>
+                    <div class="main_footer__export">
+                        <Button class="p-1 my_icon" icon="pi pi-check" aria-label="Submit" />
+                    </div>
+                </div>
+            </template>
         </DataTable>
         <Teleport to="body">
             <freeModal @close="close" :visible="visible" :data.sync="freeData"></freeModal>
@@ -127,6 +134,16 @@ const close = () => {
 </template>
 
 <style lang="scss">
+.my_icon {
+    .pi {
+        font-size: 1.3rem !important;
+    }
+}
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+}
+
 .my_filter {
     display: flex;
     justify-content: start;
@@ -138,6 +155,7 @@ const close = () => {
 .my_card {
     padding: 1rem;
 }
+
 .my_btn {
     padding: 4px 8px;
     width: 90px;

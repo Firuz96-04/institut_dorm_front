@@ -1,9 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import { createPinia } from 'pinia'
-const pinia = createPinia()
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { createPinia } from 'pinia';
+const pinia = createPinia();
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 import PrimeVue from 'primevue/config';
 import AutoComplete from 'primevue/autocomplete';
@@ -107,29 +107,27 @@ import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
 import '@/assets/main.scss';
-import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays,
-     faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, 
-    faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan]);
+import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel } from '@fortawesome/free-solid-svg-icons';
+library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel]);
 
-    const app = createApp(App);
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+const app = createApp(App);
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-app.use(pinia)
-app.component('vue-icon', FontAwesomeIcon)
+app.use(pinia);
+app.component('vue-icon', FontAwesomeIcon);
 
-app.use(router)
-app.use(PrimeVue, { ripple: true })
-app.use(ToastService)
-app.use(DialogService)
-app.use(ConfirmationService)
+app.use(router);
+app.use(PrimeVue, { ripple: true });
+app.use(ToastService);
+app.use(DialogService);
+app.use(ConfirmationService);
 
-app.directive('tooltip', Tooltip)
-app.directive('badge', BadgeDirective)
-app.directive('ripple', Ripple)
-app.directive('styleclass', StyleClass)
+app.directive('tooltip', Tooltip);
+app.directive('badge', BadgeDirective);
+app.directive('ripple', Ripple);
+app.directive('styleclass', StyleClass);
 
-app.component('BlockViewer', BlockViewer)
+app.component('BlockViewer', BlockViewer);
 
 app.component('Accordion', Accordion);
 app.component('AccordionTab', AccordionTab);

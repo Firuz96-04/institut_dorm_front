@@ -17,7 +17,6 @@ const close = () => {
 </script>
 
 <template>
-    <button @click="show">show</button>
     <div class="card">
         <DataTable :value="tenats" class="p-datatable-sm" scrollable showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">

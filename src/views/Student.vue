@@ -4,58 +4,78 @@ import { useStudentStore } from '@/store/student';
 import { useStudentTypeStore } from '@/store/student_type';
 import { useCountryStore } from '@/store/country';
 import { useFacultyStore } from '@/store/faculty';
-import deleteModal from '@/components/modals/student/deleteModal.vue'
-import addModal from '@/components/modals/student/addModal.vue'
-
+import deleteModal from '@/components/modals/student/deleteModal.vue';
+import addModal from '@/components/modals/student/addModal.vue';
+import editModal from '@/components/modals/student/editModal.vue';
 
 const studentStore = useStudentStore();
-const typeStore = useStudentTypeStore()
-const countryStore = useCountryStore()
-const facultyStore = useFacultyStore()
+const typeStore = useStudentTypeStore();
+const countryStore = useCountryStore();
+const facultyStore = useFacultyStore();
 
-typeStore.setAllStudentType()
-countryStore.setAllCountry()
-facultyStore.setAllFaculty()
-const student = ref(null)
+typeStore.setAllStudentType();
+countryStore.setAllCountry();
+facultyStore.setAllFaculty();
+const student = ref({});
 
 studentStore.setAllStudent();
-
 
 const openAdd = ref(false);
 const openEdit = ref(false);
 const openDelete = ref(false);
 
 const students = computed(() => studentStore.getAllStudent);
-const pagination = computed(() => studentStore.pagination)
+const pagination = computed(() => studentStore.pagination);
 
+const genders = ref([
+    { name: 'женшина', code: '0' },
+    { name: 'мужчина', code: '1' }
+]);
 
+const courses = ref([
+    { name: '1', code: 1 },
+    { name: '2', code: 2 },
+    { name: '3', code: 3 },
+    { name: '4', code: 4 },
+    { name: '5', code: 5 },
+    { name: '6', code: 6 }
+]);
 const student_filter = ref({
     search: null
 });
 
-
 const addHandle = () => {
-    openAdd.value = true
-}
+    openAdd.value = true;
+};
 
 const deleteHandle = (data) => {
-    const parse = JSON.parse(JSON.stringify(data))
-    student.value = parse
-    openDelete.value = true
+    const parse = JSON.parse(JSON.stringify(data));
+    student.value = parse;
+    openDelete.value = true;
+};
 
+const editHandle = (data) => {
+    const parse = JSON.parse(JSON.stringify(data));
+    const data_genders = parse.gender;
+    const data_courses = parse.course;
+    const gender = genders.value.filter((item) => item.code == data_genders)[0];
+    const course = courses.value.filter((item) => item.code == data_courses)[0];
+
+    openEdit.value = true;
+    student.value = { ...parse, gender, course };
+    console.log(student.value, 'student');
 };
 
 const my_pagin = (data) => {
     console.log(data, 'data');
-}
+};
 
 const my_pagination = (data) => {
-    const page = data.page + 1
-    const pagination = {page}
+    const page = data.page + 1;
+    const pagination = { page };
     console.log(data);
     studentStore.setAllStudent(pagination);
-
-}
+};
 </script>
 
 <template>
@@ -116,8 +136,9 @@ const my_pagination = (data) => {
         </DataTable>
     </div>
     <Teleport to="body">
-        <deleteModal :visible="openDelete" :student="student" @close="openDelete = false"/>
-        <addModal :visible="openAdd" @close="openAdd = false"/>
+        <deleteModal :visible="openDelete" :student="student" @close="openDelete = false" />
+        <addModal :visible="openAdd" @close="openAdd = false" />
+        <editModal :visible="openEdit" :student="student" @close="openEdit = false" />
     </Teleport>
 </template>
 
@@ -126,8 +147,7 @@ const my_pagination = (data) => {
     display: flex;
     justify-content: space-between;
 
-    &__filter{
-
+    &__filter {
     }
 }
 

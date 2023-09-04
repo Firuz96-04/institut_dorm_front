@@ -1,0 +1,136 @@
+<script setup>
+import { useStudentStore } from '@/store/student';
+import { useStudentTypeStore } from '@/store/student_type';
+import { useCountryStore } from '@/store/country';
+import { useFacultyStore } from '@/store/faculty';
+import { defineEmits, defineProps, ref, reactive, computed } from 'vue';
+
+const emits = defineEmits({
+    close: null
+});
+
+const props = defineProps({
+    student: {
+        type: Object,
+        required: true
+    },
+    visible:{
+        type: Boolean,
+        default:false,
+        required: true
+    }
+})
+
+const studentStore = useStudentStore();
+
+const typeStore = useStudentTypeStore();
+const countryStore = useCountryStore();
+const facultyStore = useFacultyStore();
+
+const courses = reactive([
+    { name: '1', code: 1 },
+    { name: '2', code: 2 },
+    { name: '3', code: 3 },
+    { name: '4', code: 4 },
+    { name: '5', code: 5 },
+    { name: '6', code: 6 }
+]);
+const genders = ref([
+    { name: 'женшина', code: '0' },
+    { name: 'мужчина', code: '1' }
+]);
+
+const closeModal = () => {
+    emits('close');
+};
+const editStudent = () => {
+    console.log(props.student);
+    
+};
+const kurs = ref(33)
+console.log(props.student, 'student');
+const types = computed(() => typeStore.getAllStudentType);
+const countries = computed(() => countryStore.allCountry);
+const faculties = computed(() => facultyStore.getAllFaculty);
+</script>
+<template>
+    <Dialog :visible="visible" @update:visible="closeModal" modal header="Редактировать студента" :style="{ width: '25vw' }">
+        <form @submit.prevent="editStudent">
+            <div class="p-fluid">
+                <!-- <div class="field grid">
+                    <label for="gender" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Пол</label>
+                    <div class="col-12 md:col-6 ml-4">
+                        {{ student.gender }}
+                        <Dropdown v-model="student.gender" :options="genders" id="gender" showClear optionLabel="name"  size="small" />
+                    </div>
+                </div> -->
+                <div class="field grid mt-1">
+                    <label for="name" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Имя</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <InputText id="name" v-model="student.name" type="search" :maxlength="20" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="family" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Фамилия</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <InputText v-model="student.last_name" type="search" :maxlength="20" id="family" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="phone" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Телефон</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <InputText v-model="student.phone" id="phone" :maxlength="15" type="search" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="country" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Страна</label>
+                    <div class="col-12 md:col-8 ml-4">
+                        <Dropdown v-model="student.country.id" :options="countries.map((item) => ({ name: item.name, code: item.id }))" id="country" showClear optionLabel="name" optionValue="code" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="faculty" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Факультет</label>
+                    <div class="col-12 md:col-8 ml-4">
+                        <Dropdown v-model="student.faculty.id" :options="faculties.map((item) => ({ name: item.name, code: item.id }))" id="faculty" showClear optionLabel="name" optionValue="code" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="type" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Тип студента</label>
+                    <div class="col-12 md:col-7 ml-4">
+                        <Dropdown v-model="student.student_type.id" :options="types.map((item) => ({ name: item.type, code: item.id }))" id="type" showClear optionLabel="name" optionValue="code" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="course" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Курс</label>
+                    <div class="col-12 md:col-5 ml-4">
+                        <Dropdown v-model="student.course" :options="courses" id="course" showClear optionLabel="name" size="small" />
+                    </div>
+                </div>
+
+                <div class="field grid">
+                    <label for="date" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Дата рождения</label>
+                    <div class="col-12 md:col-5 ml-4">
+                        <Calendar v-model="student.born" size="small" id="date" dateFormat="dd.mm.yy" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="gender" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Пол</label>
+                    <div class="col-12 md:col-6 ml-4">
+                        <Dropdown v-model="student.gender" :options="genders" id="gender" showClear optionLabel="name"  size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <label for="address" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Адрес</label>
+                    <div class="col-12 md:col-9 ml-4">
+                        <Textarea v-model="student.address" id="address" rows="5" cols="30" size="small" />
+                    </div>
+                </div>
+                <div class="field grid">
+                    <div class="col-12">
+                        <Button type="submit" label="Редактировать" size="small" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </Dialog>
+</template>

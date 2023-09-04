@@ -39,9 +39,8 @@ const deleteHandle = (data) => {
                 <Row>
                     <Column header="#" headerStyle="width:3rem" headerClass="column-text-center" :rowspan="2" />
                     <Column :rowspan="3" class="column-text-center">
-                        <template #header >
+                        <template #header>
                             <div style="display: block; text-align: center; font-size: 16px">Факультет</div>
-
                         </template>
                     </Column>
                     <Column header="Студенты" :colspan="2" class="column-text-center" />
@@ -93,7 +92,10 @@ const deleteHandle = (data) => {
                 </div>
             </template>
             <template #footer>
-                <div>wqaeqweqwe</div>
+                <div class="main_footer">
+                    <div></div>
+                    <div><Button class="my-btn" icon="pi pi-file-excel" aria-label="Submit" :style="{ 'font-size': '20px !important' }" size="small" /></div>
+                </div>
             </template>
         </DataTable>
     </div>
@@ -105,6 +107,16 @@ const deleteHandle = (data) => {
 </template>
 
 <style lang="scss" scoped>
+.my-btn {
+    .pi {
+    font-size: 2rem !important;
+    }
+}
+
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+}
 .p-datatable .p-column-header-content {
     align-items: center !important;
 }
