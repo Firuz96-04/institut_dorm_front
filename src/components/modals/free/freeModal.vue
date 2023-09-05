@@ -54,7 +54,7 @@ watch(
 );
 </script>
 <template>
-    <Dialog :visible="visible" @update:visible="closeModal" modal header="Заселить" :style="{ width: '20vw' }">
+    <Dialog :visible="visible" @update:visible="closeModal" modal header="Заселить" :style="{ width: '27vw' }">
         <form @submit.prevent="addFree">
             <div class="p-fluid">
                 <div class="field grid">

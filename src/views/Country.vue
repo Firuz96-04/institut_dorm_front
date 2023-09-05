@@ -33,21 +33,21 @@ const editHandle = (data) => {
         <DataTable class="p-datatable-sm" :value="countries" scrollable scrollHeight="500px" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
-                    <Column header="#" headerStyle="width:3rem" :rowspan="2" />
-                    <Column :rowspan="3" class="column-text-center">
+                    <Column header="#" headerStyle="width:3rem" headerClass="column-text-center" :rowspan="2" />
+                    <Column :rowspan="3"  headerClass="font-medium column-text-center">
                         <template #header>
-                            <div style="display: block; text-align: center; font-size: 16px">Страны</div>
+                            <div style="display: block; text-align: center; font-size: 16px" >Страны</div>
                         </template>
                     </Column>
-                    <Column header="Студенты" class="column-text-center" :colspan="2" />
+                    <Column header="Студенты" class="column-text-center" headerClass="font-medium column-text-center" :colspan="2" />
                     <Column header="!!!" class="column-text-center" :rowspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Кол. студентов" field="student_count" class="column-text-center" style="width: 150px" />
-                    <Column header="Заселены" field="booking_count" class="column-text-center" style="width: 150px" />
+                    <Column header="Кол. студентов" field="student_count" headerClass="font-medium column-text-center" style="width: 150px" />
+                    <Column header="Заселены" field="booking_count" headerClass="font-medium column-text-center" style="width: 150px" />
                 </Row>
             </ColumnGroup>
-            <Column headerStyle="width:3rem">
+            <Column headerStyle="width:3rem" class="column-text-center text-center">
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
@@ -67,15 +67,16 @@ const editHandle = (data) => {
                     </div>
                 </template>
             </Column>
-
             <ColumnGroup type="footer">
                 <Row>
-                    <Column :colspan="2" footerStyle="text-align:center">
-                        <template #body> ssss </template>
+                    <Column :colspan="2" footerClass="font-medium text-center" footerStyle="text-align:center">
+                        <template #footer> Общее количество </template>
                     </Column>
-                    <Column />
-                    <Column />
-                    <Column />
+                    <Column footerClass="font-medium" footerStyle="text-align:center">
+                        <template #footer > xx </template>
+                    </Column>
+                    <Column #footer footerClass="font-medium" footerStyle="text-align:center">401</Column>
+                    <Column></Column>
                 </Row>
             </ColumnGroup>
             <template #header>
@@ -89,7 +90,12 @@ const editHandle = (data) => {
                 </div>
             </template>
             <template #footer>
-                <div>wqaeqweqwe</div>
+                <div class="main_footer">
+                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
+                </div>
             </template>
         </DataTable>
     </div>
@@ -104,5 +110,16 @@ const editHandle = (data) => {
 .header_block {
     display: flex;
     justify-content: space-between;
+}
+
+.my_icon {
+    .pi {
+        font-size: 1.3rem !important;
+    }
+}
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 </style>

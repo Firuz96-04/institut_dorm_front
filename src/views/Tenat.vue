@@ -17,33 +17,33 @@ const close = () => {
 </script>
 
 <template>
-    <div class="card">
-        <DataTable :value="tenats" class="p-datatable-sm" scrollable showGridlines tableStyle="min-width: 50rem">
+    <div class="card" style="padding: 1rem;">
+        <DataTable :value="tenats" class="p-datatable-sm" scrollHeight="500px" scrollable showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" frozen :rowspan="2"/>
-                    <Column header="Студент" class="column-text-center" :colspan="5" frozen/>
-                    <Column header="Место проживания" class="column-text-center" :colspan="3" />
-                    <Column header="Стоимость проживания" class="column-text-center" :colspan="3" />
-                    <Column header="Дата проживания" class="column-text-center" :colspan="2" />
+                    <Column header="Студент" class="font-medium column-text-center" :colspan="5" frozen/>
+                    <Column header="Место проживания" headerClass="font-medium column-text-center" :colspan="3" />
+                    <Column header="Стоимость проживания" headerClass="font-medium column-text-center" :colspan="3" />
+                    <Column header="Дата проживания" headerClass="font-medium column-text-center" :colspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Студент" class="column-text-center" field="full_name" />
-                    <Column header="Страна" class="column-text-center" field="country" />
-                    <Column header="Факультет" class="column-text-center" field="faculty" />
-                    <Column header="Курс" class="column-text-center" field="course" />
-                    <Column header="Пол" class="column-text-center" field="gender" />
+                    <Column header="Студент" headerClass="font-medium column-text-center" field="full_name" />
+                    <Column header="Страна" headerClass="font-medium column-text-center" field="country" />
+                    <Column header="Факультет" headerClass="font-medium column-text-center" field="faculty" />
+                    <Column header="Курс" headerClass="font-medium column-text-center" field="course" />
+                    <Column header="Пол" headerClass="font-medium column-text-center" field="gender" />
                     
-                    <Column header="Здания" class="column-text-center" field="building" />
-                    <Column header="Комната" class="column-text-center" field="number" />
-                    <Column header="Этаж" class="column-text-center" field="floor" />
+                    <Column header="Здания" headerClass="font-medium column-text-center" field="building" />
+                    <Column header="Комната" headerClass="font-medium column-text-center" field="number" />
+                    <Column header="Этаж" headerClass="font-medium column-text-center" field="floor" />
 
-                    <Column header="Стоимость" class="column-text-center" field="total_price" />
-                    <Column header="Оплатил" class="column-text-center" field="payed" />
-                    <Column header="Долг" class="column-text-center" field="debt" />
+                    <Column header="Стоимость" headerClass="font-medium column-text-center" field="total_price" />
+                    <Column header="Оплатил" headerClass="font-medium column-text-center" field="payed" />
+                    <Column header="Долг" headerClass="font-medium column-text-center" field="debt" />
 
-                    <Column header="Начало" class="column-text-center" field="book_date" />
-                    <Column header="Конец" class="column-text-center" field="book_end" />
+                    <Column header="Начало" headerClass="font-medium column-text-center" field="book_date" />
+                    <Column header="Конец" headerClass="font-medium column-text-center" field="book_end" />
                 </Row>
             </ColumnGroup>
             <Column headerStyle="width:3rem" frozen>
@@ -77,9 +77,39 @@ const close = () => {
 
             <Column field="book_date" style="min-width: 100px; text-align: center;"/>
             <Column field="book_end" style="min-width: 100px; text-align: center;"/>
+            <template #header>
+                <!-- <div class="main_footer">
+                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
+                </div> -->
+            </template>
+            <template #footer>
+                <div class="main_footer">
+                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
+                </div>
+            </template>
         </DataTable>
+
     </div>
 <Teleport to="body">
     <bookModal  @close="close"  :visible="visible"></bookModal>
 </Teleport>
 </template>
+
+<style lang="scss" scoped>
+.my_icon {
+    .pi {
+        font-size: 1.3rem !important;
+    }
+}
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>

@@ -38,25 +38,25 @@ const deleteHandle = (data) => {
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" headerClass="column-text-center" :rowspan="2" />
-                    <Column :rowspan="3" class="column-text-center">
+                    <Column :rowspan="3" class="column-text-center" headerClass="font-medium">
                         <template #header>
                             <div style="display: block; text-align: center; font-size: 16px">Факультет</div>
                         </template>
                     </Column>
-                    <Column header="Студенты" :colspan="2" class="column-text-center" />
-                    <Column header="!!!" :rowspan="2" class="column-text-center" />
+                    <Column header="Студенты" :colspan="2" headerClass="font-medium column-text-center" />
+                    <Column header="!!!" :rowspan="2" headerClass="font-medium column-text-center" />
                 </Row>
                 <Row>
-                    <Column header="Кол. студентов" field="student_count" class="column-text-center" style="width: 150px" />
-                    <Column header="Заселены" field="booking_count" class="column-text-center" style="width: 150px" />
+                    <Column header="Кол. студентов" field="student_count" headerClass="font-medium column-text-center" style="width: 150px" />
+                    <Column header="Заселены" field="booking_count" headerClass="font-medium column-text-center" style="width: 150px" />
                 </Row>
             </ColumnGroup>
-            <Column headerStyle="width:3rem">
+            <Column headerStyle="width:3rem" class="column-text-center text-center">
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column style="width: 250px" headerClass="column-text-center" field="name" />
+            <Column style="width: 250px" headerClass="font-normal column-text-center" field="name" />
             <Column field="student_count" style="width: 150px" class="text-center">
                 <template #body="slotProps"> {{ slotProps.data.student_count }} </template>
             </Column>
@@ -73,12 +73,14 @@ const deleteHandle = (data) => {
             </Column>
             <ColumnGroup type="footer">
                 <Row>
-                    <Column :colspan="2" footerStyle="text-align:center">
-                        <template #body> ssss </template>
+                    <Column :colspan="2" footerClass="font-normal" footerStyle="text-align:center">
+                        <template #footer> Общее количество </template>
                     </Column>
-                    <Column />
-                    <Column />
-                    <Column />
+                    <Column footerClass="font-medium font-normal" footerStyle="text-align:center">
+                        <template #footer> xx </template>
+                    </Column>
+                    <Column #footer footerClass="font-medium font-normal" footerStyle="text-align:center">401</Column>
+                    <Column></Column>
                 </Row>
             </ColumnGroup>
             <template #header>
@@ -93,8 +95,10 @@ const deleteHandle = (data) => {
             </template>
             <template #footer>
                 <div class="main_footer">
-                    <div></div>
-                    <div><Button class="my-btn" icon="pi pi-file-excel" aria-label="Submit" :style="{ 'font-size': '20px !important' }" size="small" /></div>
+                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
                 </div>
             </template>
         </DataTable>
@@ -107,16 +111,17 @@ const deleteHandle = (data) => {
 </template>
 
 <style lang="scss" scoped>
-.my-btn {
+.my_icon {
     .pi {
-    font-size: 2rem !important;
+        font-size: 1.3rem !important;
     }
 }
-
 .main_footer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
+
 .p-datatable .p-column-header-content {
     align-items: center !important;
 }

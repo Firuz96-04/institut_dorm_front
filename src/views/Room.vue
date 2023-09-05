@@ -71,15 +71,15 @@ const closeModal = () => {
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" :rowspan="2" />
-                    <Column header="Комната" class="column-text-center" :rowspan="2" />
-                    <Column header="Этаж" class="column-text-center" :rowspan="2" />
-                    <Column header="Тип комнаты" class="column-text-center" :rowspan="2" />
-                    <Column header="Здания" class="column-text-center" :colspan="2" />
+                    <Column header="Комната" headerClass="font-medium" class="column-text-center" :rowspan="2" />
+                    <Column header="Этаж" headerClass="font-medium" class="column-text-center" :rowspan="2" />
+                    <Column header="Тип комнаты" headerClass="font-medium" class="column-text-center" :rowspan="2" />
+                    <Column header="Здания" headerClass="font-medium" class="column-text-center" :colspan="2" />
                     <Column header="!!!" class="column-text-center" :rowspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Названия" class="column-text-center" field="building_name" />
-                    <Column header="Этажность" class="column-text-center" field="building_floor_count" />
+                    <Column header="Названия" headerClass="font-medium" class="column-text-center" field="building_name" />
+                    <Column header="Этажность" headerClass="font-medium" class="column-text-center" field="building_floor_count" />
                 </Row>
             </ColumnGroup>
             <Column headerStyle="width:3rem" style="width: 50px" header="#" frozen>
@@ -123,7 +123,12 @@ const closeModal = () => {
                 </div>
             </template>
             <template #footer>
-                <div>wqaeqweqwe</div>
+                <div class="main_footer">
+                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
+                </div>
             </template>
         </DataTable>
     </div>

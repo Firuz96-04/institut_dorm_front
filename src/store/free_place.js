@@ -5,12 +5,14 @@ import { useBuildingStore } from './building';
 export const useFreePlaceStore = defineStore('free_place', {
     state: () => ({
         free_places: [],
-        free_students: []
+        free_students: [],
+        pagination: []
     }),
 
     getters: {
         getAllFreePlace: (state) => state.free_places,
-        getFreeStudent: (state) => state.free_students
+        getFreeStudent: (state) => state.free_students,
+        getPagination: (state) => state.pagination
     },
 
     actions: {
@@ -19,6 +21,7 @@ export const useFreePlaceStore = defineStore('free_place', {
             const res = await http.get('/api/free-place', { params: obj });
             const data = await res.data;
             this.free_places = data.results;
+            this.pagination = data.pagination
             const buildStore = useBuildingStore();
             buildStore.$state.buildings = data.building;
         },

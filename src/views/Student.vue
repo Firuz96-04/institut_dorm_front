@@ -86,24 +86,24 @@ const my_pagination = (data) => {
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="name" header="Имя" class="column-text-center" style="min-width: 170px" frozen></Column>
-            <Column field="last_name" class="column-text-center" headerStyle="text-align: right" header="Фамилия" style="min-width: 150px"></Column>
-            <Column field="country" header="Страна" headerClass="column-text-right" style="min-width: 200px">
+            <Column field="name" header="Имя" headerClass="font-medium column-text-center" style="min-width: 170px" frozen></Column>
+            <Column field="last_name" headerClass="font-medium column-text-center" headerStyle="text-align: right" header="Фамилия" style="min-width: 150px"></Column>
+            <Column field="country" header="Страна" headerClass="font-medium column-text-right" style="min-width: 200px">
                 <template #body="{ data }">
                     <span> {{ data.country.name }} </span>
                 </template>
             </Column>
-            <Column field="faculty.name" headerClass="column-text-right" style="min-width: 200px">
+            <Column field="faculty.name" headerClass="font-medium column-text-right" style="min-width: 200px">
                 <template #header>
                     <span style="text-align: center; display: inline-flex">Факультет</span>
                 </template>
             </Column>
-            <Column field="phone" class="column-text-center text-center" header="Телефон" style="min-width: 150px; text-align: center"></Column>
-            <Column field="born" header="Дата рождения" style="min-width: 100px; text-align: center"></Column>
-            <Column field="course" header="Курс" style="min-width: 70px" class="column-text-center text-center"></Column>
-            <Column field="student_type.type" header="Тип студента" style="min-width: 120px" class="column-text-center text-center"></Column>
+            <Column field="phone" headerClass="font-medium column-text-center" header="Телефон" style="min-width: 150px; text-align: center"></Column>
+            <Column field="born" header="Дата рождения" headerClass="font-medium column-text-center" style="min-width: 100px"></Column>
+            <Column field="course" header="Курс" headerClass="font-medium" style="min-width: 70px" class="column-text-center text-center"></Column>
+            <Column field="student_type.type" header="Тип студента" headerClass="font-medium column-text-center" style="min-width: 120px" class="text-center"></Column>
 
-            <Column field="gender" class="column-text-center text-center" header="Пол" style="min-width: 100px">
+            <Column field="gender" class="column-text-center text-center" headerClass="font-medium" header="Пол" style="min-width: 100px">
                 <template #body="slotProps">
                     <span v-if="slotProps.data.gender == 0"> женшина </span>
                     <span v-else>мужчиина</span>
@@ -130,7 +130,6 @@ const my_pagination = (data) => {
             <template #footer>
                 <div>
                     <Paginator :rows="10" @page="my_pagination" :totalRecords="pagination.total" size="small"></Paginator>
-                    {{ pagination.total }}ssss
                 </div>
             </template>
         </DataTable>
