@@ -17,33 +17,32 @@ const props = defineProps({
     },
     data: {
         type: Object,
-        default: {}
+        default: null
     }
 });
 
+const book = ref(null)
+
 const free_student = computed(() => freePlaceStore.getFreeStudent);
 
-const book = ref({
-    student: null
-});
-const selectedCity = ref(null);
-book.value = { ...props.data };
-const closeModal = () => {
-    emits('close');
-};
+const student = ref(null)
+
+const closeModal = () => emits('close');
+
 
 const filterMy = (e) => {
+    console.log(free_student.value);
+    console.log(e.value);
     if (e.value == null) {
-        // free_student.value = []
+        console.log(free_student.value, 'free student');
+        // free_student.value = computed(() => freePlaceStore.getFreeStudent);
     } else {
-        // selectedCity.value = e.value.name
-        // selectedCity.value = e.name
         freePlaceStore.setAllFreeStudent({ search: e.value });
     }
 };
 
 const addFree = () => {
-    console.log(selectedCity);
+    console.log(book.value, 'book');
 };
 
 watch(
@@ -51,6 +50,7 @@ watch(
     (newVal) => {
         book.value = { ...newVal };
     }
+
 );
 </script>
 <template>
@@ -98,7 +98,7 @@ watch(
                 <div class="field grid">
                     <label for="free_place" class="col-12 md:col-2 md:mb-0 font-medium">Студент</label>
                     <div class="col-12 md:col-7 ml-6">
-                        <Dropdown v-model="book.student" class="st_select" editable showClear @filter="filterMy" :options="free_student" size="small" optionLabel="name" placeholder="поиск студента" />
+                        <Dropdown v-model="student" class="st_select" editable showClear optionValue="code" @change="filterMy" :options="free_student" size="small" optionLabel="name" placeholder="поиск студента" />
                     </div>
                 </div>
 

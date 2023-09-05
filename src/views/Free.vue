@@ -9,7 +9,7 @@ const floors = ref([]);
 const floor_state = ref(true);
 
 const free_places = computed(() => freeStore.getAllFreePlace);
-const pagination = computed(() => freeStore.getPagination)
+const pagination = computed(() => freeStore.getPagination);
 const buildings = computed(() => buildStore.allBuilding);
 let timeout;
 const freeFilter = ref({
@@ -54,6 +54,7 @@ const buildHandle = (e) => {
     }
 };
 
+
 const filterHandle = (e) => {
     console.log('event');
     console.log(e.value);
@@ -74,13 +75,17 @@ const freePlace = (obj) => {
     visible.value = true;
 };
 
+const paginateHandle = (page) => {
+    console.log(page, 'page');
+};
+
 const close = () => {
     visible.value = false;
 };
 </script>
 <template>
-    <div class="card" style="padding: 1rem;">
-        <DataTable :value="free_places"  scrollable scrollHeight="500px" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
+    <div class="card" style="padding: 1rem">
+        <DataTable :value="free_places" scrollable scrollHeight="500px" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
             <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -91,8 +96,8 @@ const close = () => {
             <Column field="floor" headerClass="font-medium" class="column-text-center text-center" header="Этаж" style="min-width: 50px"></Column>
             <Column field="room_place" headerClass="font-medium" class="column-text-center text-center" header="Тип комнаты" style="min-width: 100px"></Column>
 
-            <Column field="person_count"  headerClass="font-medium" class="column-text-center text-center" header="Кол. проживаюших" style="min-width: 100px"></Column>
-            <Column field="free_place"  headerClass="font-medium" class="column-text-center text-center" header="Свободные места" bodyClass="text-center" style="min-width: 100px"></Column>
+            <Column field="person_count" headerClass="font-medium" class="column-text-center text-center" header="Кол. проживаюших" style="min-width: 100px"></Column>
+            <Column field="free_place" headerClass="font-medium" class="column-text-center text-center" header="Свободные места" bodyClass="text-center" style="min-width: 100px"></Column>
             <Column field="action" header="!!!" headerClass="column-text-center" style="min-width: 100px; text-align: center">
                 <template #body="{ data }">
                     <!-- <Button size="small" label="Success" severity="success" raised /> -->
@@ -122,8 +127,8 @@ const close = () => {
             <template #footer>
                 <div class="main_footer">
                     <div class="main_footer__pagination">
-                        <Paginator :rows="10" :totalRecords="120"></Paginator>
-                        {{ pagination }}</div>
+                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="pagination.total_pages" :totalRecords="pagination.total"></Paginator>
+                    </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
                     </div>
@@ -131,12 +136,27 @@ const close = () => {
             </template>
         </DataTable>
         <Teleport to="body">
-            <freeModal @close="close" :visible="visible" :data.sync="freeData"></freeModal>
+            <freeModal @close="close" :visible="visible" :data="freeData"></freeModal>
         </Teleport>
     </div>
 </template>
 
 <style lang="scss">
+.custom_pagination {
+    .p-paginator {
+        padding: 0.1rem 0.1rem !important;
+        background: none;
+        .p-paginator-page {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+
+        button {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+    }
+}
 .my_icon {
     .pi {
         font-size: 1.3rem !important;
@@ -179,7 +199,6 @@ const close = () => {
 //         display: block !important;
 //     }
 // }
-
 
 //   .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td
 .my-table {

@@ -67,7 +67,7 @@ const closeModal = () => {
 </script>
 <template>
     <div class="card room_card">
-        <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="400px" scrollable showGridlines tableStyle="min-width: 40rem">
+        <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="800px" scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" :rowspan="2" />
@@ -140,6 +140,17 @@ const closeModal = () => {
 </template>
 
 <style lang="scss" scoped>
+.my_icon {
+    .pi {
+        font-size: 1.3rem !important;
+    }
+}
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .room_card {
     padding: 1rem;
 }
