@@ -73,9 +73,9 @@ const editHandle = (data) => {
                         <template #footer> Общее количество </template>
                     </Column>
                     <Column footerClass="font-medium" footerStyle="text-align:center">
-                        <template #footer > xx </template>
+                        <template #footer> {{ countryStore.total.student_total }} </template>
                     </Column>
-                    <Column #footer footerClass="font-medium" footerStyle="text-align:center">401</Column>
+                    <Column #footer footerClass="font-medium" footerStyle="text-align:center"> {{ countryStore.total.book_total }}</Column>
                     <Column></Column>
                 </Row>
             </ColumnGroup>

@@ -73,13 +73,13 @@ const deleteHandle = (data) => {
             </Column>
             <ColumnGroup type="footer">
                 <Row>
-                    <Column :colspan="2" footerClass="font-normal" footerStyle="text-align:center">
+                    <Column :colspan="2" footerClass="font-medium font-normal" footerStyle="text-align:center">
                         <template #footer> Общее количество </template>
                     </Column>
                     <Column footerClass="font-medium font-normal" footerStyle="text-align:center">
-                        <template #footer> xx </template>
+                        <template #footer> {{ facultyStore.total.student_total }} </template>
                     </Column>
-                    <Column #footer footerClass="font-medium font-normal" footerStyle="text-align:center">401</Column>
+                    <Column #footer footerClass="font-medium font-normal" footerStyle="text-align:center">{{ facultyStore.total.book_total }}</Column>
                     <Column></Column>
                 </Row>
             </ColumnGroup>

@@ -50,6 +50,7 @@ const book_date = ref('')
 
 const closeModal = () =>  {
     student.value = null
+    privilege.value = null
     freePlaceStore.free_students = []
     emits('close')
 };

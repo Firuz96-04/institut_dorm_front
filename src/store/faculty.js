@@ -5,7 +5,8 @@ export const useFacultyStore = defineStore('faculty', {
     state: () => ({
         faculties: [],
         faculty_total: [],
-        total: []
+        total: [],
+        
     }),
 
     getters: {
