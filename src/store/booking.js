@@ -3,18 +3,21 @@ import { defineStore } from 'pinia';
 
 export const useBookingStore = defineStore('booking', {
     state: () => ({
-        bookings: []
+        bookings: [],
+        paginations: []
     }),
 
     getters: {
-        getAllBookings: (state) => state.bookings
+        getAllBookings: (state) => state.bookings,
+        getAllPaginations: (state) => state.paginations
     },
 
     actions: {
         async setAllBooking(params) {
             const res = await http.get('/api/booking', { params: params });
             const json = await res.data;
-            this.bookings = json.data;
+            this.bookings = json.results;
+            this.paginations = json.pagination
         },
 
         async addBook(obj) {

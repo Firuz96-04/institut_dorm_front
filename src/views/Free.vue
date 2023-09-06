@@ -89,13 +89,13 @@ const close = () => {
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="building" header="Здания" headerClass="font-medium column-text-center" style="min-width: 150px"></Column>
-            <Column field="number" headerClass="font-medium" class="column-text-center text-center" header="Комната" style="min-width: 60px"></Column>
-            <Column field="floor" headerClass="font-medium" class="column-text-center text-center" header="Этаж" style="min-width: 50px"></Column>
-            <Column field="room_place" headerClass="font-medium" class="column-text-center text-center" header="Тип комнаты" style="min-width: 100px"></Column>
+            <Column field="building" header="Здания" headerClass="font-semibold column-text-center" style="min-width: 150px"></Column>
+            <Column field="number" headerClass="font-semibold" class="column-text-center text-center" header="Комната" style="min-width: 60px"></Column>
+            <Column field="floor" headerClass="font-semibold" class="column-text-center text-center" header="Этаж" style="min-width: 50px"></Column>
+            <Column field="room_place" headerClass="font-semibold" class="column-text-center text-center" header="Тип комнаты" style="min-width: 100px"></Column>
 
-            <Column field="person_count" headerClass="font-medium" class="column-text-center text-center" header="Кол. проживаюших" style="min-width: 100px"></Column>
-            <Column field="free_place" headerClass="font-medium" class="column-text-center text-center" header="Свободные места" bodyClass="text-center" style="min-width: 100px"></Column>
+            <Column field="person_count" headerClass="font-semibold" class="column-text-center text-center" header="Кол. проживаюших" style="min-width: 100px"></Column>
+            <Column field="free_place" headerClass="font-semibold" class="column-text-center text-center" header="Свободные места" bodyClass="text-center" style="min-width: 100px"></Column>
             <Column field="action" header="!!!" headerClass="column-text-center" style="min-width: 100px; text-align: center">
                 <template #body="{ data }">
                     <!-- <Button size="small" label="Success" severity="success" raised /> -->

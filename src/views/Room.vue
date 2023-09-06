@@ -64,9 +64,14 @@ const closeModal = () => {
     isEdit.value = false;
     isDelete.value = false
 };
+
+const paginateHandle = (data) => {
+    console.log(data);
+}
+
 </script>
 <template>
-    <div class="card room_card">
+    <div class="card" style="padding: 1rem">
         <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="800px" scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
@@ -124,7 +129,9 @@ const closeModal = () => {
             </template>
             <template #footer>
                 <div class="main_footer">
-                    <div class="main_footer__pagination"></div>
+                    <div class="main_footer__pagination">
+                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="10" :totalRecords="52"></Paginator>
+                    </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
                     </div>
@@ -140,16 +147,19 @@ const closeModal = () => {
 </template>
 
 <style lang="scss" scoped>
+
 .my_icon {
     .pi {
         font-size: 1.3rem !important;
     }
 }
+
 .main_footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 
 .room_card {
     padding: 1rem;

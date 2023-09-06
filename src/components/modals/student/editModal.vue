@@ -47,7 +47,6 @@ const editStudent = () => {
     console.log(props.student);
     
 };
-const kurs = ref(33)
 console.log(props.student, 'student');
 const types = computed(() => typeStore.getAllStudentType);
 const countries = computed(() => countryStore.allCountry);
@@ -57,13 +56,6 @@ const faculties = computed(() => facultyStore.getAllFaculty);
     <Dialog :visible="visible" @update:visible="closeModal" modal header="Редактировать студента" :style="{ width: '25vw' }">
         <form @submit.prevent="editStudent">
             <div class="p-fluid">
-                <!-- <div class="field grid">
-                    <label for="gender" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Пол</label>
-                    <div class="col-12 md:col-6 ml-4">
-                        {{ student.gender }}
-                        <Dropdown v-model="student.gender" :options="genders" id="gender" showClear optionLabel="name"  size="small" />
-                    </div>
-                </div> -->
                 <div class="field grid mt-1">
                     <label for="name" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Имя</label>
                     <div class="col-12 md:col-9 ml-4">

@@ -76,34 +76,39 @@ const my_pagination = (data) => {
     console.log(data);
     studentStore.setAllStudent(pagination);
 };
+
+const paginateHandle = (data) => {
+    console.log(data, 'data');
+}
+
 </script>
 
 <template>
     <div class="card test_card">
-        <DataTable :value="students" scrollHeight="800px" scrollable :rows="10" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
+        <DataTable :value="students" scrollHeight="650px" scrollable :rows="10" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
             <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="name" header="Имя" headerClass="font-medium column-text-center" style="min-width: 170px" frozen></Column>
-            <Column field="last_name" headerClass="font-medium column-text-center" headerStyle="text-align: right" header="Фамилия" style="min-width: 150px"></Column>
-            <Column field="country" header="Страна" headerClass="font-medium column-text-right" style="min-width: 200px">
+            <Column field="name" header="Имя" headerClass="font-semibold column-text-center" style="min-width: 170px" frozen></Column>
+            <Column field="last_name" headerClass="font-semibold column-text-center" headerStyle="text-align: right" header="Фамилия" style="min-width: 150px"></Column>
+            <Column field="country" header="Страна" headerClass="font-semibold column-text-right" style="min-width: 200px">
                 <template #body="{ data }">
                     <span> {{ data.country.name }} </span>
                 </template>
             </Column>
-            <Column field="faculty.name" headerClass="font-medium column-text-right" style="min-width: 200px">
+            <Column field="faculty.name" headerClass="font-semibold column-text-right" style="min-width: 200px">
                 <template #header>
                     <span style="text-align: center; display: inline-flex">Факультет</span>
                 </template>
             </Column>
-            <Column field="phone" headerClass="font-medium column-text-center" header="Телефон" style="min-width: 150px; text-align: center"></Column>
-            <Column field="born" header="Дата рождения" headerClass="font-medium column-text-center" style="min-width: 100px"></Column>
-            <Column field="course" header="Курс" headerClass="font-medium" style="min-width: 70px" class="column-text-center text-center"></Column>
-            <Column field="student_type.type" header="Тип студента" headerClass="font-medium column-text-center" style="min-width: 120px" class="text-center"></Column>
+            <Column field="phone" headerClass="font-semibold column-text-center" header="Телефон" style="min-width: 150px; text-align: center"></Column>
+            <Column field="born" header="Дата рождения" headerClass="font-semibold column-text-center" style="min-width: 100px"></Column>
+            <Column field="course" header="Курс" headerClass="font-semibold" style="min-width: 70px" class="column-text-center text-center"></Column>
+            <Column field="student_type.type" header="Тип студента" headerClass="font-semibold column-text-center" style="min-width: 120px" class="text-center"></Column>
 
-            <Column field="gender" class="column-text-center text-center" headerClass="font-medium" header="Пол" style="min-width: 100px">
+            <Column field="gender" class="column-text-center text-center" headerClass="font-semibold" header="Пол" style="min-width: 100px">
                 <template #body="slotProps">
                     <span v-if="slotProps.data.gender == 0"> женшина </span>
                     <span v-else>мужчиина</span>
@@ -128,8 +133,13 @@ const my_pagination = (data) => {
                 </div>
             </template>
             <template #footer>
-                <div>
-                    <Paginator :rows="10" @page="my_pagination" :totalRecords="pagination.total" size="small"></Paginator>
+                <div class="main_footer">
+                    <div class="main_footer__pagination">
+                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
+                    </div>
+                    <div class="main_footer__export">
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                    </div>
                 </div>
             </template>
         </DataTable>
@@ -142,6 +152,32 @@ const my_pagination = (data) => {
 </template>
 
 <style lang="scss">
+.custom_pagination {
+    .p-paginator {
+        padding: 0.1rem 0.1rem !important;
+        background: none;
+        .p-paginator-page {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+
+        button {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+    }
+}
+.my_icon {
+    .pi {
+        font-size: 1.3rem !important;
+    }
+}
+.main_footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .student_header {
     display: flex;
     justify-content: space-between;
