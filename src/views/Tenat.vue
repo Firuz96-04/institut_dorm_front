@@ -30,7 +30,7 @@ const paginateHandle = (data) => {
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" frozen :rowspan="2"/>
-                    <Column header="Студент" class="font-semibold column-text-center" :colspan="5" frozen/>
+                    <Column header="Студент" class="font-semibold column-text-center" :colspan="6" frozen/>
                     <Column header="Место проживания" headerClass="font-semibold column-text-center" :colspan="3" />
                     <Column header="Стоимость проживания" headerClass="font-semibold column-text-center" :colspan="3" />
                     <Column header="Дата проживания" headerClass="font-semibold column-text-center" :colspan="2" />
@@ -41,7 +41,8 @@ const paginateHandle = (data) => {
                     <Column header="Факультет" headerClass="font-semibold column-text-center" field="faculty" />
                     <Column header="Курс" headerClass="font-semibold column-text-center" field="course" />
                     <Column header="Пол" headerClass="font-semibold column-text-center" field="gender" />
-                    
+                    <Column header="Тип" headerClass="font-semibold column-text-center" field="student_type" />
+
                     <Column header="Здания" headerClass="font-semibold column-text-center" field="building" />
                     <Column header="Комната" headerClass="font-semibold column-text-center" field="number" />
                     <Column header="Этаж" headerClass="font-semibold column-text-center" field="floor" />
@@ -75,6 +76,8 @@ const paginateHandle = (data) => {
                     <span v-else>мужчиина</span>
                 </template>
             </Column>
+            <Column field="student.student_type" style="min-width: 70px" class="text-center" />
+
             <Column field="room.building" style="min-width: 150px" class="text-center" />
             <Column field="room.number" style="min-width: 100px" class="text-center" />
             <Column field="room.floor" style="min-width: 100px" class="text-center" />

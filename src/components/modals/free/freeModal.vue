@@ -32,9 +32,9 @@ watch(
     () => props.data,
     (newVal) => {
         const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth() + 1; // month is zero-based
-        const day = today.getDate();
+        const year = today.toLocaleString("default", {year: "numeric"})
+        const month = today.toLocaleString("default", {month: "2-digit"}) // month is zero-based
+        const day = today.toLocaleString("default", {day: "2-digit"})
         const sana = `${year}-${month}-${day}`
 
         book_date.value = sana
@@ -90,10 +90,10 @@ const addFree = () => {
 
     }
     console.log(apartment, 'apartment');
-    // freePlaceStore.addFreeBook({
-    //     apartment: apartment,
-    //     cb: closeModal
-    // })
+    freePlaceStore.addFreeBook({
+        apartment: apartment,
+        cb: closeModal
+    })
 };
 
 
