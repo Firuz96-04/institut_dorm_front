@@ -47,6 +47,7 @@ const closeModal = () => {
     student.value.born = null
     student.value.gender = null
     student.value.country = null
+    student.value.course = null
     student.value.student_type = null
     student.value.faculty = null
     student.value.address = ''

@@ -17,7 +17,7 @@ const freeFilter = ref({
     floor: null,
     is_full: null,
     place: null,
-    room: null
+    room: null,
 });
 
 const status_list = ref([
@@ -54,9 +54,7 @@ const buildHandle = (e) => {
     }
 };
 
-
 const filterHandle = (e) => {
-    console.log('event');
     console.log(e.value);
     freeStore.setAllFreePlace(freeFilter.value);
 };
@@ -75,8 +73,8 @@ const freePlace = (obj) => {
     visible.value = true;
 };
 
-const paginateHandle = (page) => {
-    console.log(page, 'page');
+const paginateHandle = ({page}) => {
+     freeStore.setAllFreePlace({page: page+1});
 };
 
 const close = () => {
@@ -127,7 +125,7 @@ const close = () => {
             <template #footer>
                 <div class="main_footer">
                     <div class="main_footer__pagination">
-                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="pagination.total_pages" :totalRecords="pagination.total"></Paginator>
+                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
                     </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />

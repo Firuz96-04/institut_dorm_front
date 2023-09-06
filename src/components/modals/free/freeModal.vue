@@ -27,15 +27,19 @@ const free_student = computed(() => freePlaceStore.getFreeStudent);
 
 const student = ref(null)
 
-const closeModal = () => emits('close');
+const closeModal = () =>  {
+    emits('close')
+
+};
 
 
 const filterMy = (e) => {
     console.log(free_student.value);
-    console.log(e.value);
+    console.log(e.value)
+    console.log(e.value == null, 'null');
     if (e.value == null) {
-        console.log(free_student.value, 'free student');
-        // free_student.value = computed(() => freePlaceStore.getFreeStudent);
+        freePlaceStore.free_students = []
+        // console.log('kk');
     } else {
         freePlaceStore.setAllFreeStudent({ search: e.value });
     }
@@ -98,7 +102,11 @@ watch(
                 <div class="field grid">
                     <label for="free_place" class="col-12 md:col-2 md:mb-0 font-medium">Студент</label>
                     <div class="col-12 md:col-7 ml-6">
-                        <Dropdown v-model="student" class="st_select" editable showClear optionValue="code" @change="filterMy" :options="free_student" size="small" optionLabel="name" placeholder="поиск студента" />
+                        <Dropdown v-model="student" editable class="st_select" panelClass="my_drop" editble showClear @change="filterMy" :options="free_student" size="small" optionLabel="name" placeholder="поиск студента">
+                            <template #empty panelClass="my_drop">
+                                    пусто
+                            </template>
+                        </Dropdown>
                     </div>
                 </div>
 
@@ -113,10 +121,29 @@ watch(
 </template>
 
 <style lang="scss">
+.my_drop {
+    .p-dropdown-panel   {
+        padding: 0.1rem !important;
+        color: red !important;
+    }
+}
 .st_select {
     .p-inputtext {
         padding: 0.55rem 0.55rem !important;
     }
+    ul {
+    .p-dropdown-panel {
+        padding: 0.1rem !important;
+        color: red !important;
+    } 
+    }
+    // .p-dropdown-items {
+    //     padding: 0.1rem !important;
+    // }
+
+    // .p-dropdown-panel {
+    //     padding: 0.1rem;   
+    // }
 }
 .field {
     margin-bottom: 0.7rem;
