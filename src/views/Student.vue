@@ -26,6 +26,8 @@ const openDelete = ref(false);
 
 const students = computed(() => studentStore.getAllStudent);
 const pagination = computed(() => studentStore.pagination);
+const countries = computed(() => countryStore.allCountry)
+const faculties = computed(() => facultyStore.getAllFaculty)
 
 const genders = ref([
     { name: 'женшина', code: '0' },
@@ -41,7 +43,9 @@ const courses = ref([
     { name: '6', code: 6 }
 ]);
 const student_filter = ref({
-    search: null
+    search: null,
+    country: null,
+    faculty: null
 });
 
 const addHandle = () => {
@@ -104,7 +108,7 @@ const paginateHandle = (data) => {
                 </template>
             </Column>
             <Column field="phone" headerClass="font-semibold column-text-center" header="Телефон" style="min-width: 150px; text-align: center"></Column>
-            <Column field="born" header="Дата рождения" headerClass="font-semibold column-text-center" style="min-width: 100px"></Column>
+            <Column field="born" header="Дата рождения" headerClass="font-semibold column-text-center" style="min-width: 100px; text-align: center"></Column>
             <Column field="course" header="Курс" headerClass="font-semibold" style="min-width: 70px" class="column-text-center text-center"></Column>
             <Column field="student_type.type" header="Тип студента" headerClass="font-semibold column-text-center" style="min-width: 120px" class="text-center"></Column>
 
@@ -126,6 +130,11 @@ const paginateHandle = (data) => {
                 <div class="student_header">
                     <div class="student_header__filter">
                         <InputText v-model="student_filter.search" type="search" class="my_input" placeholder="студент" />
+                        <Dropdown v-model="student.country" showClear class="st_select ml-4 md:w-14rem" :options="countries.map((item) => ({ name: item.name, code: item.id }))" 
+                            optionLabel="name" optionValue="code" placeholder="страна" size="small" />
+
+                        <Dropdown v-model="student.faculty" showClear class="st_select ml-4 md:w-14rem" :options="faculties.map((item) => ({ name: item.name, code: item.id }))" 
+                            optionLabel="name" optionValue="code" placeholder="факультет" size="small" />
                     </div>
                     <div class="">
                         <Button label="Добавить" @click="addHandle" size="small" raised />
@@ -152,6 +161,25 @@ const paginateHandle = (data) => {
 </template>
 
 <style lang="scss">
+
+.st_select {
+    .p-inputtext {
+        padding: 0.55rem 0.55rem !important;
+    }
+    ul {
+    .p-dropdown-panel {
+        padding: 0.1rem !important;
+        color: red !important;
+    } 
+    }
+    // .p-dropdown-items {
+    //     padding: 0.1rem !important;
+    // }
+
+    // .p-dropdown-panel {
+    //     padding: 0.1rem;   
+    // }
+}
 .custom_pagination {
     .p-paginator {
         padding: 0.1rem 0.1rem !important;
