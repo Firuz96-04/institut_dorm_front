@@ -24,6 +24,9 @@ const deleteHandle = () => {
 const closeModal = () => {
     emit('close');
 };
+
+
+
 </script>
 
 <template>

@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import { http } from '@/api/axios/interceptors';
 
+
 export const useFacultyStore = defineStore('faculty', {
     state: () => ({
         faculties: [],
         faculty_total: [],
         total: [],
-        
     }),
 
     getters: {
@@ -35,7 +35,8 @@ export const useFacultyStore = defineStore('faculty', {
                 const data = await res.data;
                 this.faculty_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
-                obj.message()
+                obj.message('kolliu')
+                // toast.add({ severity: 'success', summary: 'Факультет', detail: 'Добавлен', life: 3000 });
             } catch (error) {
                 console.log(error);
             }

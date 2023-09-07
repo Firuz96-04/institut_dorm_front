@@ -36,7 +36,8 @@ const deleteHandle = (data) => {
 
 </script>
 <template>
-    <div class="card" style="width: 850px; margin: 0 auto; padding: 1rem;">
+    <Toast />  
+<div class="card" style="width: 850px; margin: 0 auto; padding: 1rem;">
         <DataTable class="p-datatable-sm" :value="faculties" scrollable scrollHeight="500px" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>

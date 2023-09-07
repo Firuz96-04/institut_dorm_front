@@ -1,10 +1,7 @@
 <script setup>
 import { useMainStore } from '@/store/main_dorm';
 import { computed, ref } from 'vue';
-import Message from 'primevue/message';
 import MainCard from '@/components/cards/MainCard.vue'
-
-
 
 const mainStore = useMainStore();
 mainStore.setAllMain();

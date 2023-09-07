@@ -25,4 +25,7 @@ export const useNotifyStore = defineStore('notify', {
     }
 
 
+//     <Message v-if="notifications.length" :life="5000" v-for="item in notifications" style="margin-top: 100px" :severity="item.severity">  {{ item.message }} 
+// </Message>
+
 });

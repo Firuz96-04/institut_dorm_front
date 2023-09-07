@@ -1,6 +1,9 @@
 <script setup>
 import { useFacultyStore } from '@/store/faculty';
 import { defineEmits, defineProps, ref } from 'vue';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
 const facultyStore = useFacultyStore();
 
 const emits = defineEmits({
@@ -17,6 +20,8 @@ const visible = ref(false);
 
 
 const closeModal = () => emits('close');
+
+
 
 const addFaculty = () => {
     const parse = JSON.parse(JSON.stringify(props.item))

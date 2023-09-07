@@ -22,7 +22,7 @@ const model = ref([
             { label: 'Страны', icon: 'fa-globe', to: '/country' }, 
             { label: 'Привилегии', icon: 'fa-certificate', to: '/privilege'}, 
             { label: 'Сотрудники', icon: 'fa-user-tie', to: '/employee'}, 
-            { label: 'Pisma', icon: 'fa-user-tie', to: '/xabar'}, 
+            // { label: 'Pisma', icon: 'fa-user-tie', to: '/xabar'}, 
 
             
         ]

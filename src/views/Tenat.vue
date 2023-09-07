@@ -111,9 +111,9 @@ const paginateHandle = (data) => {
         </DataTable>
 
     </div>
-<Teleport to="body">
-    <bookModal  @close="close"  :visible="visible"></bookModal>
-</Teleport>
+    <Teleport to="body">
+        <bookModal @close="close" :visible="visible"></bookModal>
+    </Teleport>
 </template>
 
 <style lang="scss">

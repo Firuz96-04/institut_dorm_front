@@ -20,7 +20,8 @@ const closeModal = () => {
     faculty.value.name = null;
     emits('close');
 };
-const showSuccess = () => {
+const showSuccess = (message) => {
+    console.log(message, 'message');
     toast.add({ severity: 'success', summary: 'Факультет', detail: 'Добавлен', life: 3000 });
 };
 
