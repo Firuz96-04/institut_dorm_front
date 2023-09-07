@@ -70,6 +70,11 @@ const router = createRouter({
                     component: () => import('@/views/Employee.vue')
                 },
                 {
+                    path: '/xabar',
+                    name: 'xabar',
+                    component: () => import('@/views/Message.vue')
+                },
+                {
                     path: '/uikit/formlayout',
                     name: 'formlayout',
                     component: () => import('@/views/uikit/FormLayout.vue')

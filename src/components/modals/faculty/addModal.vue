@@ -1,6 +1,10 @@
 <script setup>
 import { useFacultyStore } from '@/store/faculty';
 import { defineEmits, ref } from 'vue';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+
 const facultyStore = useFacultyStore();
 
 const emits = defineEmits({
@@ -16,12 +20,18 @@ const closeModal = () => {
     faculty.value.name = null;
     emits('close');
 };
+const showSuccess = () => {
+    toast.add({ severity: 'success', summary: 'Факультет', detail: 'Добавлен', life: 3000 });
+};
+
 const addFaculty = () => {
     facultyStore.addFaculty({
         faculty: faculty.value,
-        cb: closeModal
+        cb: closeModal,
+        message: showSuccess
     });
 };
+
 </script>
 <template>
     <Dialog :visible="visible" @update:visible="closeModal" modal header="Добавить факультет" :style="{ width: '20vw' }">

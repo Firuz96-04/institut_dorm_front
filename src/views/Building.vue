@@ -15,7 +15,7 @@ const addHandle = (data) => {};
 <template>
     <div class="card my_table">
         <DataTable :value="buildings" class="p-datatable-sm" showGridlines scrollable scrollHeight="400px">
-            <Column header="#" headerStyle="width:3rem">
+            <Column header="#" headerStyle="width:4rem">
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
@@ -27,7 +27,7 @@ const addHandle = (data) => {};
                 </template>
             </Column>
             <Column field="address" headerClass="font-semibold column-text-center" header="Адрес" style="width: 50%"></Column>
-            <Column field="actions" header="!!!" headerClass="column-text-center" style="width: 80px">
+            <Column field="actions" header="!!!" headerClass="column-text-center" style="min-width: 90px">
                 <template #body="{ data }">
                     <div class="action_style">
                         <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />

@@ -1,7 +1,7 @@
 <script setup>
 import { useMainStore } from '@/store/main_dorm';
 import { computed, ref } from 'vue';
-
+import Message from 'primevue/message';
 import MainCard from '@/components/cards/MainCard.vue'
 
 
@@ -12,8 +12,7 @@ mainStore.setAllMain();
 const main = computed(() => mainStore.allMain)
 </script>
 <template>
-    <div class="main_card">
-        <!-- {{ main }} -->
+    <div class="main_card">  
         <MainCard v-for="item in main" :build="item"/>
     </div>
 </template>

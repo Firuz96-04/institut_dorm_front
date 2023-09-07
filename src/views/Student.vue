@@ -4,6 +4,9 @@ import { useStudentStore } from '@/store/student';
 import { useStudentTypeStore } from '@/store/student_type';
 import { useCountryStore } from '@/store/country';
 import { useFacultyStore } from '@/store/faculty';
+
+
+
 import deleteModal from '@/components/modals/student/deleteModal.vue';
 import addModal from '@/components/modals/student/addModal.vue';
 import editModal from '@/components/modals/student/editModal.vue';
@@ -88,8 +91,9 @@ const paginateHandle = (data) => {
 </script>
 
 <template>
-    <div class="card test_card">
-        <DataTable :value="students" scrollable scrollHeight="calc(100vh - 250px)" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
+
+    <div class="card test_card">  
+        <DataTable :value="students" scrollable scrollHeight="calc(100vh - 300px)" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
             <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}

@@ -35,6 +35,7 @@ export const useFacultyStore = defineStore('faculty', {
                 const data = await res.data;
                 this.faculty_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
+                obj.message()
             } catch (error) {
                 console.log(error);
             }

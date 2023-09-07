@@ -7,6 +7,10 @@ import addRoom from '@/components/modals/room/addRoom.vue';
 import editRoom from '@/components/modals/room/editRoom.vue';
 import deleteRoom from '@/components/modals/room/deleteRoom.vue';
 
+
+import { useNotifyStore } from '@/store/notification';
+const useNotify = useNotifyStore()
+
 const buildStore = useBuildingStore();
 const roomStore = useRoomStore();
 const roomTypeStore = useRoomTypeStore()
@@ -80,9 +84,15 @@ const customRowStyle = (elem) => {
     }
     
 }
+const message = ref('')
+const addMessage = () => {
+    useNotify.addNotification(message.value)
+}
 </script>
 <template>
     <div class="card" style="padding: 1rem">
+        <button @click="addMessage">add</button>
+        <input v-model="message" />
         <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="calc(100vh - 250px)"
         :rowStyle="customRowStyle"
         scrollable showGridlines tableStyle="min-width: 40rem">

@@ -5,6 +5,8 @@ import addModal from '@/components/modals/faculty/addModal.vue';
 import editModal from '@/components/modals/faculty/editModal.vue';
 import deleteModal from '@/components/modals/faculty/deleteModal.vue';
 
+
+
 const facultyStore = useFacultyStore();
 facultyStore.facultyTotal();
 
@@ -31,10 +33,11 @@ const deleteHandle = (data) => {
     faculty.value = data;
     openDelete.value = true;
 };
+
 </script>
 <template>
-    <div class="card" style="width: 850px; margin: 0 auto">
-        <DataTable class="p-datatable-sm" :value="faculties" scrollable scrollHeight="400px" showGridlines tableStyle="min-width: 50rem">
+    <div class="card" style="width: 850px; margin: 0 auto; padding: 1rem;">
+        <DataTable class="p-datatable-sm" :value="faculties" scrollable scrollHeight="500px" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" headerClass="column-text-center" :rowspan="2" />
