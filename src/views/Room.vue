@@ -69,13 +69,26 @@ const paginateHandle = (data) => {
     console.log(data);
 }
 
+const customRowStyle = (elem) => {
+    console.log(elem, 'elem');
+    switch (elem.floor) {
+        case 4:
+        return { background: '#8d99ae' };
+    
+        default:
+        return {  };
+    }
+    
+}
 </script>
 <template>
     <div class="card" style="padding: 1rem">
-        <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="800px" scrollable showGridlines tableStyle="min-width: 40rem">
+        <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="calc(100vh - 250px)"
+        :rowStyle="customRowStyle"
+        scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
-                    <Column header="#" :rowspan="2" />
+                    <Column header="#" :rowspan="2" class="column-text-center"/>
                     <Column header="Комната" headerClass="font-medium" class="column-text-center" :rowspan="2" />
                     <Column header="Этаж" headerClass="font-medium" class="column-text-center" :rowspan="2" />
                     <Column header="Тип комнаты" headerClass="font-medium" class="column-text-center" :rowspan="2" />
@@ -87,12 +100,12 @@ const paginateHandle = (data) => {
                     <Column header="Этажность" headerClass="font-medium" class="column-text-center" field="building_floor_count" />
                 </Row>
             </ColumnGroup>
-            <Column headerStyle="width:3rem" style="width: 50px" header="#" frozen>
+            <Column headerStyle="width:2rem" class="text-center" header="#" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column field="number" class="text-center" style="min-width: 150px"></Column>
+            <Column field="number" class="text-center" style="min-width: 150px;"></Column>
             <Column field="floor" class="text-center" style="min-width: 100px"></Column>
             <Column field="room_type.place" class="text-center" style="min-width: 100px"></Column>
             <Column field="building_name" class="text-center" style="min-width: 150px"></Column>
@@ -118,12 +131,13 @@ const paginateHandle = (data) => {
                             optionLabel="name"
                             optionValue="code"
                             placeholder="Select a City"
-                            class="w-full md:w-12rem my_dropdown"
+                            class="st_select w-full md:w-12rem "
                             size="small"
+                            
                         />
                     </div>
                     <div>
-                        <Button label="Добавить" @click="addHandle" severity="secondary" size="small" text raised />
+                        <Button label="Добавить" @click="addHandle" size="small" raised />
                     </div>
                 </div>
             </template>
@@ -147,7 +161,17 @@ const paginateHandle = (data) => {
 </template>
 
 <style lang="scss" scoped>
-
+.st_select {
+    .p-inputtext {
+        padding: 0.55rem 0.55rem !important;
+    }
+    ul {
+    .p-dropdown-panel {
+        padding: 0.1rem !important;
+        color: red !important;
+    } 
+    }
+}
 .my_icon {
     .pi {
         font-size: 1.3rem !important;
@@ -158,17 +182,6 @@ const paginateHandle = (data) => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-
-.room_card {
-    padding: 1rem;
-}
-
-.my_dropdown {
-    .p-inputtext {
-        padding: 0.5rem 0.5rem !important;
-    }
 }
 .header_block {
     display: flex;

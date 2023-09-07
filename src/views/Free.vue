@@ -83,7 +83,7 @@ const close = () => {
 </script>
 <template>
     <div class="card" style="padding: 1rem">
-        <DataTable :value="free_places" scrollable scrollHeight="500px" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
+        <DataTable :value="free_places" scrollable scrollHeight="calc(100vh - 250px)" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
             <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}

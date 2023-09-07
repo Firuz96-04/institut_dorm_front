@@ -43,7 +43,8 @@ const editHandle = (data) => {
                     <Column header="!!!" class="column-text-center" :rowspan="2" />
                 </Row>
                 <Row>
-                    <Column header="Кол. студентов" field="student_count" headerClass="font-medium column-text-center" style="width: 150px" />
+                    <Column header="Кол. студентов" field="student_count" 
+                        headerClass="font-medium column-text-center"  style="width: 150px" />
                     <Column header="Заселены" field="booking_count" headerClass="font-medium column-text-center" style="width: 150px" />
                 </Row>
             </ColumnGroup>
@@ -52,8 +53,8 @@ const editHandle = (data) => {
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
-            <Column style="width: 250px" field="name" />
-            <Column field="student_count" style="width: 150px" class="text-center">
+            <Column style="width: 250px" field="name"  class=""/>
+            <Column field="student_count" style="width: 150px" class="text-center ">
                 <template #body="slotProps"> {{ slotProps.data.student_count }} </template>
             </Column>
             <Column field="student_count" style="width: 150px" class="text-center">
@@ -85,7 +86,7 @@ const editHandle = (data) => {
                         <InputText v-model="name" type="text" size="small" :maxlength="8" placeholder="Страна" />
                     </div>
                     <div>
-                        <Button label="Добавить" @click="addHandle" severity="secondary" size="small" text raised />
+                        <Button label="Добавить" class="text-base py-2 px-3" @click="addHandle" size="small" raised />
                     </div>
                 </div>
             </template>
@@ -110,6 +111,8 @@ const editHandle = (data) => {
 .header_block {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    align-content: center;
 }
 
 .my_icon {

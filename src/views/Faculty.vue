@@ -89,7 +89,7 @@ const deleteHandle = (data) => {
                         <InputText v-model="name" class="my_input" type="search" size="small" :maxlength="10" placeholder="Факультет" />
                     </div>
                     <div>
-                        <Button label="Добавить" @click="addHandle" severity="secondary" size="small" text raised />
+                        <Button label="Добавить" @click="addHandle" size="small" raised />
                     </div>
                 </div>
             </template>

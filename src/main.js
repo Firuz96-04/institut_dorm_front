@@ -107,9 +107,10 @@ import BlockViewer from '@/components/BlockViewer.vue';
 
 import '@/assets/styles.scss';
 import '@/assets/main.scss';
-import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel } from '@fortawesome/free-solid-svg-icons';
-library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel]);
-
+import { faUserSecret, faDoorClosed, faUsers, faHotel, faLandmark, faGlobe, faHouse, faCertificate,
+     faCalendarDays, faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel, faUserTie } from '@fortawesome/free-solid-svg-icons';
+library.add([faUserSecret, faUsers, faHotel, faDoorClosed, faLandmark, faGlobe, faHouse, faCertificate, faCalendarDays, 
+faBuildingUser, faHandHoldingDollar, faPenToSquare, faTrashCan, faFileExcel, faUserTie]);
 const app = createApp(App);
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 

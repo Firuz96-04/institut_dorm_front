@@ -15,6 +15,11 @@ const addHandle = (data) => {};
 <template>
     <div class="card my_table">
         <DataTable :value="buildings" class="p-datatable-sm" showGridlines scrollable scrollHeight="400px">
+            <Column header="#" headerStyle="width:3rem">
+                <template #body="slotProps">
+                    {{ slotProps.index + 1 }}
+                </template>
+            </Column>
             <Column field="name" headerClass="font-semibold column-text-center" header="Названия" style="width: 25%" ></Column>
             <Column field="floor_count" header="Этажность" headerClass="font-semibold column-text-center" class="text-center" style="width: 15%">
                 <template #body="{ data }">

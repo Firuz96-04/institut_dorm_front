@@ -11,7 +11,6 @@ const model = ref([
     {
         label: '',
         items: [
-            { label: 'Главная', icon: 'fa-house', to: '/' },
             { label: 'Main', icon: 'fa-house', to: '/main' },
             { label: 'Заселить', icon: 'fa-calendar-days', to: '/free' },
             { label: 'Жильцы ', icon: 'fa-building-user', to: '/booking' },
@@ -22,6 +21,7 @@ const model = ref([
             { label: 'Факультеты', icon: 'fa-landmark', to: '/faculty' },
             { label: 'Страны', icon: 'fa-globe', to: '/country' }, 
             { label: 'Привилегии', icon: 'fa-certificate', to: '/privilege'}, 
+            { label: 'Сотрудники', icon: 'fa-user-tie', to: '/employee'}, 
         ]
     },
     {

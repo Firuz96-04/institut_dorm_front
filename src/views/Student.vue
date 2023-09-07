@@ -89,7 +89,7 @@ const paginateHandle = (data) => {
 
 <template>
     <div class="card test_card">
-        <DataTable :value="students" scrollHeight="650px" scrollable :rows="10" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
+        <DataTable :value="students" scrollable scrollHeight="calc(100vh - 250px)" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
             <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -172,13 +172,6 @@ const paginateHandle = (data) => {
         color: red !important;
     } 
     }
-    // .p-dropdown-items {
-    //     padding: 0.1rem !important;
-    // }
-
-    // .p-dropdown-panel {
-    //     padding: 0.1rem;   
-    // }
 }
 .custom_pagination {
     .p-paginator {

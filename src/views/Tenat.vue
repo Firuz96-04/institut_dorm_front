@@ -26,7 +26,7 @@ const paginateHandle = (data) => {
 
 <template>
     <div class="card" style="padding: 1rem;">
-        <DataTable :value="tenats" class="p-datatable-sm" scrollHeight="500px" scrollable showGridlines tableStyle="min-width: 50rem">
+        <DataTable :value="tenats" class="p-datatable-sm" scrollable scrollHeight="calc(100vh - 250px)" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" headerStyle="width:3rem" frozen :rowspan="2"/>
