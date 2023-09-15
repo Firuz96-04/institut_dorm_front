@@ -3,32 +3,65 @@ tbody tr:hover {
     background-color: none;
     background-color: #e9ecef !important; /* Change to your preferred color */
     cursor: pointer;
-  }
+}
 
 .my_input {
     // font-size: 14px !important;
     padding: 0.5rem 0.5rem !important;
 }
 
-
 .action_style {
-  display: flex;
-  justify-content: space-evenly;
+    display: flex;
+    justify-content: space-evenly;
 
-  &__edit {
-      font-size: 18px;
-      color: #ffbe0b;
-  }
+    &__edit {
+        font-size: 18px;
+        color: #ffbe0b;
+    }
 
-  &__delete {
-      font-size: 18px;
-      color: #ef233c;
-  }
+    &__delete {
+        font-size: 18px;
+        color: #ef233c;
+    }
 }
 
 .column-text-center {
-  .p-column-header-content {
-      text-align: center; // or center
-      display: block !important;
-  }
+    .p-column-header-content {
+        text-align: center; // or center
+        display: block !important;
+    }
+}
+
+// ### pagination
+.custom_pagination {
+    .p-paginator {
+        padding: 0.1rem 0.1rem !important;
+        background: none;
+        .p-paginator-page {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+
+        button {
+            height: 2rem !important;
+            min-width: 2rem !important;
+        }
+    }
+}
+
+.my-table {
+    .p-datatable-tbody > tr > td {
+        padding: 0.3rem !important;
+    }
+    .p-table .p-datatable-wrapper {
+        border: 2px solid rgb(14, 24, 15) !important; /* замените "red" на нужный цвет */
+    }
+}
+
+.p-datatable-wrapper {
+    border: 2px solid rgb(14, 24, 15) !important; /* замените "red" на нужный цвет */
+}
+
+.p-datatable .p-datatable-tbody td {
+  border-color: #dea2a2 !important;
 }

@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia';
 import { http } from '@/api/axios/interceptors';
-
+import {getDate} from '../mixins/get_date'
 
 export const useFacultyStore = defineStore('faculty', {
     state: () => ({
         faculties: [],
         faculty_total: [],
         total: [],
+        loading: false
     }),
 
     getters: {
@@ -55,6 +56,27 @@ export const useFacultyStore = defineStore('faculty', {
             } catch (error) {
                 console.log(error);
             }
-        }
+        },
+
+         export() {
+            this.loading = true
+            http.get('/api/faculty/export', {
+                method: 'GET',
+                responseType: 'blob',
+            }).then((response) => {
+                const href = URL.createObjectURL(response.data);
+                const link = document.createElement('a');
+                link.href = href;
+                link.download = ''
+                link.setAttribute('download',`${getDate()}-faculty.xlsx`); 
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(href);
+                this.loading = false
+            }).catch((error) => {
+                console.log(error);
+            })
+        },
     }
 });

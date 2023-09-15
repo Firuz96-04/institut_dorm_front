@@ -195,13 +195,6 @@ const my_change = (e) => {
         color: red !important;
     } 
     }
-    // .p-dropdown-items {
-    //     padding: 0.1rem !important;
-    // }
-
-    // .p-dropdown-panel {
-    //     padding: 0.1rem;   
-    // }
 }
 .field {
     margin-bottom: 0.7rem;

@@ -70,23 +70,10 @@ const paginateHandle = (data) => {
     console.log(data);
 }
 
-const customRowStyle = (elem) => {
-    console.log(elem, 'elem');
-    switch (elem.floor) {
-        case 4:
-        return { background: '#8d99ae' };
-    
-        default:
-        return {  };
-    }
-    
-}
-
 </script>
 <template>
     <div class="card" style="padding: 1rem">
         <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="calc(100vh - 250px)"
-        :rowStyle="customRowStyle"
         scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
@@ -124,7 +111,7 @@ const customRowStyle = (elem) => {
             <template #header>
                 <div class="header_block">
                     <div class="header_block__filter">
-                        <InputText v-model="room_filter.room" @update:modelValue="searchRoom" class="my_input w-full md:w-8rem" type="search" size="small" :maxlength="4" placeholder="комната" />
+                        <InputText v-model="room_filter.room" @update:modelValue="searchRoom" class="my_input w-full md:w-8rem text-base" type="search" size="small" :maxlength="4" placeholder="комната" />
                         <Dropdown
                             v-model="room_filter.building"
                             :options="buildings.map((item) => ({ name: item.name, code: item.id }))"
@@ -132,8 +119,8 @@ const customRowStyle = (elem) => {
                             showClear
                             optionLabel="name"
                             optionValue="code"
-                            placeholder="Select a City"
-                            class="st_select w-full md:w-12rem "
+                            placeholder="Здания"
+                            class="st_select w-full md:w-12rem ml-4"
                             size="small"
                             
                         />
@@ -165,7 +152,7 @@ const customRowStyle = (elem) => {
 <style lang="scss" scoped>
 .st_select {
     .p-inputtext {
-        padding: 0.55rem 0.55rem !important;
+        padding: 0.5rem 0.5rem !important;
     }
     ul {
     .p-dropdown-panel {

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useFreePlaceStore } from '@/store/free_place';
 import { useBuildingStore } from '@/store/building';
 import freeModal from '@/components/modals/free/freeModal.vue';
+import showTenat from '@/components/modals/free/showTenat.vue'
 const freeStore = useFreePlaceStore();
 const buildStore = useBuildingStore();
 const floors = ref([]);
@@ -34,7 +35,7 @@ const freeData = ref({});
 freeStore.setAllFreePlace();
 
 const visible = ref(false);
-
+const openShow = ref(false)
 const buildHandle = (e) => {
     if (e.value) {
         console.log(e.value);
@@ -79,11 +80,35 @@ const paginateHandle = ({page}) => {
 
 const close = () => {
     visible.value = false;
+    openShow.value = false
 };
+
+const checkRoomGender = (data) => {
+    const room = JSON.parse(JSON.stringify(data))
+    switch (room.room_gender) {
+        case '0':
+        return { background: '#ffc8dd' };
+        case '1':
+        return { background: '#bde0fe' };
+        
+        default:
+        return {  };
+    }
+}
+
+const handleRow = ({data}) => {
+    if (data.person_count > 0) {
+        openShow.value = true
+        
+    }
+}
+
 </script>
 <template>
     <div class="card" style="padding: 1rem">
-        <DataTable :value="free_places" scrollable scrollHeight="calc(100vh - 250px)" class="p-datatable-sm my-table" showGridlines tableStyle="min-width: 40rem">
+        <DataTable :value="free_places" scrollable  tableStyleClass="red-bottom-border" scrollHeight="calc(100vh - 250px)" 
+        class="p-datatable-sm my-table"
+        :rowStyle="checkRoomGender" @row-click="handleRow" showGridlines tableStyle="min-width: 40rem red-bottom-border">
             <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -114,12 +139,17 @@ const close = () => {
                         optionValue="code"
                         :options="buildings.map((item) => ({ name: item.name, code: item.id }))"
                         placeholder="Здания"
-                        class="p-inputtext-sm w-full md:w-12rem"
+                        class="p-inputtext-sm w-full md:w-12rem "
                     />
-                    <Dropdown v-model="freeFilter.floor" showClear @change="filterHandle" optionValue="code" :disabled="floor_state" :options="floors" optionLabel="name" class="p-inputtext-sm w-full md:w-8rem" placeholder="Этаж"></Dropdown>
-                    <Dropdown v-model="freeFilter.is_full" showClear @change="filterHandle" optionValue="code" :options="status_list" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Статус"></Dropdown>
-                    <Dropdown v-model="freeFilter.place" showClear @change="filterHandle" optionValue="code" :options="free_place" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Кол. мест"></Dropdown>
-                    <InputText type="search" v-model="freeFilter.room" @update:modelValue="searchRoom" placeholder="Комнаты" class="p-inputtext-sm w-full md:w-8rem" :maxlength="4" :clearable="true" />
+                    <Dropdown v-model="freeFilter.floor" showClear @change="filterHandle" optionValue="code" 
+                    :disabled="floor_state" :options="floors" optionLabel="name" 
+                    class="p-inputtext-sm w-full md:w-8rem" placeholder="Этаж"></Dropdown>
+                    <Dropdown v-model="freeFilter.is_full" showClear @change="filterHandle" optionValue="code" 
+                    :options="status_list" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Статус"></Dropdown>
+                    <Dropdown v-model="freeFilter.place" showClear @change="filterHandle" optionValue="code" 
+                    :options="free_place" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Кол. мест"></Dropdown>
+                    <!-- <InputText type="search" v-model="freeFilter.room"  @update:modelValue="searchRoom" placeholder="Комнаты" 
+                        class="p-inputtext-sm w-full md:w-8rem" :maxlength="4" :clearable="true" /> -->
                 </div>
             </template>
             <template #footer>
@@ -135,11 +165,24 @@ const close = () => {
         </DataTable>
         <Teleport to="body">
             <freeModal @close="close" :visible="visible" :data="freeData"></freeModal>
+            <showTenat @close="close" :visible="openShow" :room="{}"/>
         </Teleport>
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.my_border {
+.p-table .p-datatable-wrapper {
+  border: 2px solid rgb(0, 255, 38) !important/* замените "red" на нужный цвет */
+}
+}
+// .p-inputtext {
+//   font-size: 1rem !important;
+// }
+.red-bottom-border {
+    border-bottom: 3px solid red !important;
+}
 .custom_pagination {
     .p-paginator {
         padding: 0.1rem 0.1rem !important;
@@ -199,9 +242,5 @@ const close = () => {
 // }
 
 //   .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td
-.my-table {
-    .p-datatable-tbody > tr > td {
-        padding: 0.3rem !important;
-    }
-}
+
 </style>

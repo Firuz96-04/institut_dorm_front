@@ -27,11 +27,12 @@ export const useFreePlaceStore = defineStore('free_place', {
         },
 
         async addFreeBook(obj) {
-            console.log(obj, 'obj');
+            console.log(obj, 'meeeeeeeeeeeeeee');
+            console.log(obj.apartment, 'apart');
             try {
                 const res = await http.post('/api/booking', obj.apartment);
                 const json = await res.data;
-                console.log(json.data, 'json');
+                console.log(json, 'json');
                 const free_data = JSON.parse(JSON.stringify(this.free_places));
                 const idx = free_data.findIndex((elem) => elem.room_id == obj.apartment.room);
                 this.free_places[idx] = json.data;

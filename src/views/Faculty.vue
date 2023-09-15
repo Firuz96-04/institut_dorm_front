@@ -14,9 +14,13 @@ const show = () => {
     console.log('kkk');
 };
 
+// const loading = ref(true)
+
 const faculty = ref({});
 
 const faculties = computed(() => facultyStore.allFacultyTotal);
+
+const loading = computed(() => facultyStore.loading)
 const name = ref();
 
 const openAdd = ref(false);
@@ -33,7 +37,9 @@ const deleteHandle = (data) => {
     faculty.value = data;
     openDelete.value = true;
 };
-
+const exportExcel = () => {
+    facultyStore.export()
+}
 </script>
 <template>
     <Toast />  
@@ -65,7 +71,7 @@ const deleteHandle = (data) => {
                 <template #body="slotProps"> {{ slotProps.data.student_count }} </template>
             </Column>
             <Column field="student_count" style="width: 150px" class="text-center">
-                <template #body="slotProps" @click="show"> {{ slotProps.data.booking_count }} </template>
+                <template #body="slotProps"> {{ slotProps.data.booking_count }} </template>
             </Column>
             <Column field="action" headerClass="column-text-right" header="!!!" style="width: 80px">
                 <template #body="{ data }">
@@ -93,7 +99,7 @@ const deleteHandle = (data) => {
                         <InputText v-model="name" class="my_input" type="search" size="small" :maxlength="10" placeholder="Факультет" />
                     </div>
                     <div>
-                        <Button label="Добавить" @click="addHandle" size="small" raised />
+                        <Button label="Добавить" @click="addHandle"  size="small" raised />
                     </div>
                 </div>
             </template>
@@ -101,7 +107,8 @@ const deleteHandle = (data) => {
                 <div class="main_footer">
                     <div class="main_footer__pagination"></div>
                     <div class="main_footer__export">
-                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                        <Button class="py-1 px-2 my_icon" :loading="loading" icon="pi pi-file-excel" severity="success"
+                         @click="exportExcel" label="Excel" aria-label="Submit" />
                     </div>
                 </div>
             </template>

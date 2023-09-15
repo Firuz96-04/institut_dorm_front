@@ -2,35 +2,12 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
-
+import { useToast } from 'primevue/usetoast';
 const { layoutConfig, onMenuToggle } = useLayout();
 
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
 const router = useRouter();
-const items = ref([
-    {
-        label: 'Options',
-        items: [
-            {
-                label: 'Update',
-                icon: 'pi pi-refresh',
-                command: () => {
-                    toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
-                }
-            },
-            {
-                label: 'Delete',
-                icon: 'pi pi-times',
-                command: () => {
-                    console.log('message');
-                    toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000 });
-                }
-            }
-        ]
-    },
-   
-]);
 onMounted(() => {
     bindOutsideClickListener();
 });
@@ -77,6 +54,40 @@ const isOutsideClicked = (event) => {
 
     return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target));
 };
+
+const items = ref([
+    { separator: true },
+    {
+        label: 'Profile',
+        icon: 'pi pi-fw pi-user',
+        command: () => {
+            console.log('profil');
+        }
+    },
+    {
+        label: 'Settings',
+        icon: 'pi pi-fw pi-cog',
+        command: () => {
+            console.log('Settings');
+        }
+    },
+    { separator: true },
+    {
+        label: 'Log out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+            console.log('Settings');
+        }
+    }
+]);
+
+const toggle = (event) => {
+    menu.value.toggle(event);
+};
+const goo = () => {
+    console.log('message');
+};
+const menu = ref();
 </script>
 
 <template>
@@ -90,15 +101,33 @@ const isOutsideClicked = (event) => {
             <i class="pi pi-bars"></i>
         </button>
 
-
         <div class="layout-topbar-menu" :class="topbarMenuClasses">
-            <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-                <i class="pi pi-user"></i>
-                <span>Profile</span>
-            </button>
-
+            <div>
+                <button @click="toggle" class="p-link layout-topbar-button">
+                    <i class="pi pi-user"></i>
+                    <span>Profile</span>
+                </button>
+                <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
+                    <template #start>
+                        <button class="w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround">
+                            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="mr-2" shape="circle" />
+                            <div class="flex flex-column align">
+                                <span class="font-bold">Amy Elsner</span>
+                                <span class="text-sm">Agent</span>
+                            </div>
+                        </button>
+                    </template>
+                    <template #item="{ item }">
+                        <div style="display: flex; justify-content: start">
+                            <button class="w-full p-link flex align-items-center p-2 pl-4 text-color hover:surface-200 border-noround">
+                                <i :class="item.icon" />
+                                <span class="ml-2">{{ item.label }}</span>
+                            </button>
+                        </div>
+                    </template>
+                </Menu>
+            </div>
         </div>
-        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
 </template>
 

@@ -1,15 +1,33 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useBuildingStore } from '@/store/building';
+import addModal from '@/components/modals/building/addModal.vue'
+import deleteModal from '@/components/modals/building/deleteModal.vue'
+import editModal from '@/components/modals/building/editModal.vue'
 
 const buildingStore = useBuildingStore();
 buildingStore.setAllBuilding();
+const building = ref({})
 
 const buildings = computed(() => buildingStore.allBuilding);
+const openAdd = ref(false)
+const openDelete = ref(false)
+const openEdit = ref(false)
 
-const deleteHandle = () => {};
+const deleteHandle = (data) => {
 
-const addHandle = (data) => {};
+    const build = JSON.parse(JSON.stringify(data))
+    building.value = build
+    openDelete.value = true
+};
+
+const editHandle = (data) => {
+    const build = JSON.parse(JSON.stringify(data))
+    building.value = build
+    openEdit.value = true
+}
+
+const addHandle = () => openAdd.value = true;
 
 </script>
 <template>
@@ -26,12 +44,17 @@ const addHandle = (data) => {};
                     <span class="my_column" @click="show">{{ data.floor_count }}</span>
                 </template>
             </Column>
+            <Column field="principal" headerClass="font-semibold column-text-center" class="text-center" header="Комендант" style="width: 20%" >
+                <template #body="{ data }">
+                    <span>{{ data.principal.last_name }}  {{ data.principal.name }}</span>
+                </template>
+            </Column>
             <Column field="address" headerClass="font-semibold column-text-center" header="Адрес" style="width: 50%"></Column>
             <Column field="actions" header="!!!" headerClass="column-text-center" style="min-width: 90px">
                 <template #body="{ data }">
                     <div class="action_style">
                         <vue-icon class="action_style__edit" @click="editHandle(data)" icon="fa-solid fa-pen-to-square" />
-                        <vue-icon class="action_style__delete" @click="deleteHandle" icon="fa-solid fa-trash-can" />
+                        <vue-icon class="action_style__delete" @click="deleteHandle(data)" icon="fa-solid fa-trash-can" />
                     </div>
                 </template>
             </Column>
@@ -52,6 +75,11 @@ const addHandle = (data) => {};
             </template>
         </DataTable>
     </div>
+    <Teleport to="body">
+        <addModal :visible="openAdd" @close="openAdd = false" />
+        <deleteModal :visible="openDelete" :building="building" @close="openDelete = false" /> 
+        <editModal :visible="openEdit" :building="building" @close="openEdit = false" />
+    </Teleport>
 </template>
 
 <style scoped>
@@ -62,7 +90,7 @@ const addHandle = (data) => {};
 
 }
 .my_table {
-    width: 850px;
+    width: 1000px;
     margin: 0 auto;
     padding: 1rem;
 }
