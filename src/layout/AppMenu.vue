@@ -4,14 +4,14 @@ import { ref } from 'vue';
 import AppMenuItem from './AppMenuItem.vue';
 
 const model = ref([
-    {
-        label: 'Home',
-        items: [{ label: 'Главная', icon: 'fa-house', to: '/' }]
-    },
+    // {
+    //     label: 'Home',
+    //     items: [{ label: 'Главная', icon: 'fa-house', to: '/' }]
+    // },
     {
         label: '',
         items: [
-            { label: 'Main', icon: 'fa-house', to: '/main' },
+            { label: 'Главная', icon: 'fa-house', to: '/' },
             { label: 'Заселить', icon: 'fa-calendar-days', to: '/free' },
             { label: 'Жильцы ', icon: 'fa-building-user', to: '/booking' },
             { label: 'Оплаты ', icon: 'fa-hand-holding-dollar', to: '/payment' },
@@ -22,20 +22,9 @@ const model = ref([
             { label: 'Страны', icon: 'fa-globe', to: '/country' }, 
             { label: 'Привилегии', icon: 'fa-certificate', to: '/privilege'}, 
             { label: 'Сотрудники', icon: 'fa-user-tie', to: '/employee'}, 
-            // { label: 'Pisma', icon: 'fa-user-tie', to: '/xabar'}, 
-
-            
+            { label: 'Pisma', icon: 'fa-user-tie', to: '/xabar'},
         ]
     },
-    {
-        label: 'UI Components',
-        items: [
-            { label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/uikit/formlayout' },
-            { label: 'Panel', icon: 'pi pi-fw pi-tablet', to: '/uikit/panel' },
-            { label: 'Message', icon: 'pi pi-fw pi-comment', to: '/uikit/message' },
-        ]
-    },
-
 ]);
 </script>
 

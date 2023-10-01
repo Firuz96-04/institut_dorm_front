@@ -59,19 +59,19 @@ const faculties = computed(() => facultyStore.getAllFaculty);
                 <div class="field grid mt-1">
                     <label for="name" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Имя</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <InputText id="name" v-model="student.name" type="search" :maxlength="20" size="small" />
+                        <InputText id="name" class="text-base" v-model="student.name" type="search" :maxlength="20" size="small" />
                     </div>
                 </div>
                 <div class="field grid">
                     <label for="family" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Фамилия</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <InputText v-model="student.last_name" type="search" :maxlength="20" id="family" size="small" />
+                        <InputText v-model="student.last_name" class="text-base" type="search" :maxlength="20" id="family" size="small" />
                     </div>
                 </div>
                 <div class="field grid">
                     <label for="phone" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Телефон</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <InputText v-model="student.phone" id="phone" :maxlength="15" type="search" size="small" />
+                        <InputText v-model="student.phone" class="text-base" id="phone" :maxlength="15" type="search" size="small" />
                     </div>
                 </div>
                 <div class="field grid">
@@ -114,7 +114,7 @@ const faculties = computed(() => facultyStore.getAllFaculty);
                 <div class="field grid">
                     <label for="address" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Адрес</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <Textarea v-model="student.address" id="address" rows="5" cols="30" size="small" />
+                        <Textarea v-model="student.address" class="text-base" id="address" rows="5" cols="30" size="small" />
                     </div>
                 </div>
                 <div class="field grid">

@@ -48,7 +48,7 @@ const addBuilding = () => {
                 <div class="field grid mt-1">
                     <label for="name" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Здания</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <InputText id="name" v-model="building.name" type="search" :maxlength="25" size="small" />
+                        <InputText id="name" v-model="building.name" class="text-base" type="search" :maxlength="25" size="small" />
                     </div>
                 </div>
                 <div class="field grid">
@@ -60,7 +60,7 @@ const addBuilding = () => {
                 <div class="field grid mt-1">
                     <label for="address" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Адрес</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <InputText id="address" v-model="building.address" type="search" :maxlength="35" size="small" />
+                        <InputText id="address" class="text-base" v-model="building.address" type="search" :maxlength="35" size="small" />
                     </div>
                 </div>
                 <div class="field grid">
@@ -72,7 +72,7 @@ const addBuilding = () => {
                 <div class="field grid">
                     <label for="description" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Описания</label>
                     <div class="col-12 md:col-9 ml-4">
-                        <Textarea v-model="building.description" id="description" rows="5" cols="30" size="small" />
+                        <Textarea v-model="building.description" class="text-base" id="description" rows="5" cols="30" size="small" />
                     </div>
                 </div>
                 <div class="field grid">

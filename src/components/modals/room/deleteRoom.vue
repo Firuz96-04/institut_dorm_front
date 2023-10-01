@@ -1,6 +1,8 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
-import { useFacultyStore } from '@/store/faculty';
+import { useRoomStore } from '@/store/room';
+
+const roomStore = useRoomStore();
 
 const props = defineProps({
     visible: {
@@ -18,7 +20,10 @@ const emit = defineEmits({
 });
 
 const deleteHandle = () => {
-    console.log('delete');
+    roomStore.roomDelete({
+        id: props.room.id,
+        cb: closeModal
+    })
 };
 
 const closeModal = () => {

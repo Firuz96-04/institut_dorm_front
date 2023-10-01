@@ -1,8 +1,11 @@
+// @import '_fonts';
+
 .layout-sidebar {
     position: fixed;
     width: 240px;
     height: calc(100vh - 5rem);
     z-index: 999;
+    // font-family: "Roboto";
     overflow-y: auto;
     user-select: none;
     top: 5rem;

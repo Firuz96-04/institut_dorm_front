@@ -35,7 +35,7 @@ const addCountry = () => {
 </script>
 
 <template>
-    <Dialog :visible="visible" @update:visible="closeModal" modal header="Добавить страну" :style="{ width: '20vw' }">
+    <Dialog :visible="visible" @update:visible="closeModal" modal header="Добавить страну" :style="{ width: '25vw' }">
         <form @submit.prevent="addCountry">
             <div class="flex flex-column align-items-center justify-content-center text-justify">
                 <div class="col-8 p-0 mb-2">

@@ -9,9 +9,15 @@ const buildStore = useBuildingStore();
 const floors = ref([]);
 const floor_state = ref(true);
 
+
+buildStore.setAllBuilding()
+
 const free_places = computed(() => freeStore.getAllFreePlace);
 const pagination = computed(() => freeStore.getPagination);
 const buildings = computed(() => buildStore.allBuilding);
+const loading = computed(() => freeStore.loading)
+
+const selectedProduct = ref([])
 let timeout;
 const freeFilter = ref({
     building: null,
@@ -19,12 +25,22 @@ const freeFilter = ref({
     is_full: null,
     place: null,
     room: null,
+    gender: null,
+    page: null
 });
 
 const status_list = ref([
     { name: 'свободные', code: 0 },
     { name: 'занятие', code: 1 }
 ]);
+
+
+const roomGenderList = [
+    {name:'женские', code: 0},
+    {name:'мужские', code: 1},
+    {name:'незаселенные', code: 2},
+]
+
 const free_place = ref([
     { name: '1', code: 1 },
     { name: '2', code: 2 },
@@ -56,7 +72,6 @@ const buildHandle = (e) => {
 };
 
 const filterHandle = (e) => {
-    console.log(e.value);
     freeStore.setAllFreePlace(freeFilter.value);
 };
 
@@ -69,13 +84,16 @@ const searchRoom = (e) => {
         freeStore.setAllFreePlace(freeFilter.value);
     }, 500);
 };
+
 const freePlace = (obj) => {
     freeData.value = JSON.parse(JSON.stringify(obj));
     visible.value = true;
 };
 
-const paginateHandle = ({page}) => {
-     freeStore.setAllFreePlace({page: page+1});
+const paginateHandle = (data) => {
+    // console.log(data, 'data');
+     freeFilter.value.page = data.page + 1
+     freeStore.setAllFreePlace(freeFilter.value);
 };
 
 const close = () => {
@@ -96,23 +114,34 @@ const checkRoomGender = (data) => {
     }
 }
 
-const handleRow = ({data}) => {
-    if (data.person_count > 0) {
+const handleRow = (event) => {
+    const column = event.originalEvent.target.textContent;
+
+    if(column != '') {
+        const {data} = event
+        if (data.person_count > 0) {
         openShow.value = true
-        
+      }
     }
 }
+
 
 </script>
 <template>
     <div class="card" style="padding: 1rem">
-        <DataTable :value="free_places" scrollable  tableStyleClass="red-bottom-border" scrollHeight="calc(100vh - 250px)" 
+        <DataTable :value="free_places" v-model:selection="selectedProduct" scrollable  tableStyleClass="red-bottom-border"
+        :loading="loading" scrollHeight="calc(100vh - 250px)" 
         class="p-datatable-sm my-table"
         :rowStyle="checkRoomGender" @row-click="handleRow" showGridlines tableStyle="min-width: 40rem red-bottom-border">
             <Column header="#" headerStyle="width:3rem" class="column-text-center text-center" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
                 </template>
+            </Column>
+            <Column selectionMode="multiple" class="column-text-center text-center" @click.stop headerStyle="width: 3rem">
+                <!-- <template #body="slotProps">
+                    
+                </template> -->
             </Column>
             <Column field="building" header="Здания" headerClass="font-semibold column-text-center" style="min-width: 150px"></Column>
             <Column field="number" headerClass="font-semibold" class="column-text-center text-center" header="Комната" style="min-width: 60px"></Column>
@@ -148,14 +177,19 @@ const handleRow = ({data}) => {
                     :options="status_list" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Статус"></Dropdown>
                     <Dropdown v-model="freeFilter.place" showClear @change="filterHandle" optionValue="code" 
                     :options="free_place" optionLabel="name" class="p-inputtext-sm w-full md:w-10rem" placeholder="Кол. мест"></Dropdown>
-                    <!-- <InputText type="search" v-model="freeFilter.room"  @update:modelValue="searchRoom" placeholder="Комнаты" 
+                  
+                    <Dropdown v-model="freeFilter.gender" showClear @change="filterHandle" optionValue="code" 
+                    :options="roomGenderList" optionLabel="name" class="p-inputtext-sm w-full md:w-14rem" placeholder="тип комнаты"></Dropdown>
+                 <!-- <InputText type="search" v-model="freeFilter.room"  @update:modelValue="searchRoom" placeholder="Комнаты" 
                         class="p-inputtext-sm w-full md:w-8rem" :maxlength="4" :clearable="true" /> -->
                 </div>
+
+                
             </template>
             <template #footer>
                 <div class="main_footer">
                     <div class="main_footer__pagination">
-                        <Paginator v-if="pagination.next" class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
+                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
                     </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />

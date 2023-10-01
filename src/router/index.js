@@ -8,14 +8,12 @@ const router = createRouter({
         {
             path: '/',
             component: AppLayout,
+            meta: {
+                requiresAuth: true,
+            },
             children: [
                 {
                     path: '/',
-                    name: 'dashboard',
-                    component: () => import('@/views/Dashboard.vue')
-                },
-                {
-                    path: '/main',
                     name: 'main',
                     component: () => import('@/views/Main.vue')
                 },
@@ -69,31 +67,10 @@ const router = createRouter({
                     name: 'employee',
                     component: () => import('@/views/Employee.vue')
                 },
-                // {
-                //     path: '/xabar',
-                //     name: 'xabar',
-                //     component: () => import('@/views/Message.vue')
-                // },
                 {
-                    path: '/uikit/formlayout',
-                    name: 'formlayout',
-                    component: () => import('@/views/uikit/FormLayout.vue')
-                },
-                {
-                    path: '/uikit/panel',
-                    name: 'panel',
-                    component: () => import('@/views/uikit/Panels.vue')
-                },
-                {
-                    path: '/uikit/message',
-                    name: 'message',
-                    component: () => import('@/views/uikit/Messages.vue')
-                },
-
-                {
-                    path: '/pages/crud',
-                    name: 'crud',
-                    component: () => import('@/views/pages/Crud.vue')
+                    path: '/xabar',
+                    name: 'xabar',
+                    component: () => import('@/views/Message.vue')
                 }
             ]
         },
@@ -102,23 +79,31 @@ const router = createRouter({
             name: 'notfound',
             component: () => import('@/views/pages/NotFound.vue')
         },
-
         {
-            path: '/auth/login',
+            path: '/login',
             name: 'login',
             component: () => import('@/views/pages/auth/Login.vue')
-        },
-        {
-            path: '/auth/access',
-            name: 'accessDenied',
-            component: () => import('@/views/pages/auth/Access.vue')
-        },
-        {
-            path: '/auth/error',
-            name: 'error',
-            component: () => import('@/views/pages/auth/Error.vue')
         }
     ]
+});
+
+router.beforeEach((to, from, next) => {
+
+    const loggedIn = localStorage.getItem('user');
+    if (to.name === 'login') {
+        next();
+      } else if (!loggedIn) {
+        // Redirect to the login route if not logged in
+        next({ name: 'login' });
+      } else {
+        // Allow access to other routes if logged in
+        next();
+      } 
+    // if (!loggedIn) {
+    //     next({name: 'login'});
+    //   } else {
+    //     next();
+    //   }
 });
 
 export default router;

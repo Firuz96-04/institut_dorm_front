@@ -2,8 +2,10 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLayout } from '@/layout/composables/layout';
 import { useRouter } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
+import {useAuthStore} from '@/store/auth'
 const { layoutConfig, onMenuToggle } = useLayout();
+
+const authStore = useAuthStore()
 
 const outsideClickListener = ref(null);
 const topbarMenuActive = ref(false);
@@ -20,10 +22,6 @@ const logoUrl = computed(() => {
     return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 });
 
-const onTopBarMenuButton = () => {
-    console.log('message');
-    topbarMenuActive.value = !topbarMenuActive.value;
-};
 const topbarMenuClasses = computed(() => {
     return {
         'layout-topbar-menu-mobile-active': topbarMenuActive.value
@@ -58,14 +56,7 @@ const isOutsideClicked = (event) => {
 const items = ref([
     { separator: true },
     {
-        label: 'Profile',
-        icon: 'pi pi-fw pi-user',
-        command: () => {
-            console.log('profil');
-        }
-    },
-    {
-        label: 'Settings',
+        label: 'Настройки',
         icon: 'pi pi-fw pi-cog',
         command: () => {
             console.log('Settings');
@@ -73,9 +64,11 @@ const items = ref([
     },
     { separator: true },
     {
-        label: 'Log out',
+        label: 'Выйти',
         icon: 'pi pi-sign-out',
         command: () => {
+            authStore.logout()
+            router.push('login')
             console.log('Settings');
         }
     }
@@ -84,9 +77,7 @@ const items = ref([
 const toggle = (event) => {
     menu.value.toggle(event);
 };
-const goo = () => {
-    console.log('message');
-};
+
 const menu = ref();
 </script>
 

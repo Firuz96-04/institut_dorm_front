@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { http } from '@/api/axios/interceptors';
-import {getDate} from '../mixins/get_date'
+import {getDate} from '../helpers/get_date'
+import {useNotifyStore} from './notification'
+
+const notify = useNotifyStore()
 
 export const useFacultyStore = defineStore('faculty', {
     state: () => ({
@@ -36,10 +39,13 @@ export const useFacultyStore = defineStore('faculty', {
                 const data = await res.data;
                 this.faculty_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
-                obj.message('kolliu')
+                // obj.message('kolliu 123123')
                 // toast.add({ severity: 'success', summary: 'Факультет', detail: 'Добавлен', life: 3000 });
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                const {error} = err.response.data
+                console.log(err.response, 'res');
+                obj.cb();
+                notify.addNotification({status:'error', message: error})
             }
         },
 
@@ -49,12 +55,27 @@ export const useFacultyStore = defineStore('faculty', {
                     name: obj.faculty.name
                 });
                 const data = await res.data;
-                const item_id = this.allFacultyTotal.findIndex(item => item.id == obj.faculty.id)
-                this.allFacultyTotal[item_id].name = obj.faculty.name
+                const item_id = this.faculty_total.findIndex(item => item.id == obj.faculty.id)
+                this.faculty_total[item_id].name = obj.faculty.name
                 
                 obj.cb()
             } catch (error) {
                 console.log(error);
+            }
+        },
+
+        async facultyDelete(obj) {
+            try {
+                const res = await http.delete(`/api/faculty/${obj.id}`);
+                const data = await res.data;
+                const item_id = this.faculty_total.findIndex(item => item.id == obj.id)
+                this.faculty_total.splice(item_id, 1)
+                obj.cb();
+            } catch (err) {
+                const {error} = err.response.data
+                console.log(err.response);
+                obj.cb();
+                notify.addNotification({status:'error', message: error})
             }
         },
 

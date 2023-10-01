@@ -10,12 +10,6 @@ import deleteModal from '@/components/modals/faculty/deleteModal.vue';
 const facultyStore = useFacultyStore();
 facultyStore.facultyTotal();
 
-const show = () => {
-    console.log('kkk');
-};
-
-// const loading = ref(true)
-
 const faculty = ref({});
 
 const faculties = computed(() => facultyStore.allFacultyTotal);
@@ -96,7 +90,7 @@ const exportExcel = () => {
             <template #header>
                 <div class="header_block">
                     <div>
-                        <InputText v-model="name" class="my_input" type="search" size="small" :maxlength="10" placeholder="Факультет" />
+                        <InputText v-model="name" class="text-base" type="search" size="small" :maxlength="10" placeholder="Факультет" />
                     </div>
                     <div>
                         <Button label="Добавить" @click="addHandle"  size="small" raised />

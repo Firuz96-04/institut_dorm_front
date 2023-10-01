@@ -2,7 +2,7 @@
 import { defineProps, defineEmits, ref, watch, computed } from 'vue';
 import { useFreePlaceStore } from '@/store/free_place';
 import { usePriviligeStore } from '@/store/privilige';
-
+import { getDate } from '@/helpers/get_date'
 
 const freePlaceStore = useFreePlaceStore();
 const priviligeStore = usePriviligeStore()
@@ -31,11 +31,7 @@ const props = defineProps({
 watch(
     () => props.data,
     (newVal) => {
-        const today = new Date();
-        const year = today.toLocaleString("default", {year: "numeric"})
-        const month = today.toLocaleString("default", {month: "2-digit"}) // month is zero-based
-        const day = today.toLocaleString("default", {day: "2-digit"})
-        const sana = `${year}-${month}-${day}`
+        const sana = getDate(null)
 
         book_date.value = sana
     }
@@ -76,21 +72,25 @@ const filterMy = (e) => {
 };
 
 const addFree = () => {
-    // const today = book_date.value;
-    console.log(typeof(book_date.value));
-        // const year = today.getFullYear();
-        // const month = today.getMonth() + 1; // month is zero-based
-        // const day = today.getDate();
-        // const sana = `${year}-${month}-${day}`
+    
+    let start_date = ''
+
+    if ( typeof(book_date.value) == 'string') {
+        start_date  = book_date.value
+    }
+    else {
+        start_date = getDate(book_date.value)
+    }
+
 
     const apartment = {
         student: student.value,
         room: props.data.room_id,
         privilege: privilege.value,
-        book_date: book_date.value
+        book_date: start_date
 
     }
-    console.log(apartment, 'apartment');
+
     freePlaceStore.addFreeBook({
         apartment: apartment,
         cb: closeModal
@@ -205,6 +205,5 @@ const my_change = (e) => {
     justify-content: center;
     align-items: center;
     margin: 0 auto;
-    // background-color: #cda;
 }
 </style>

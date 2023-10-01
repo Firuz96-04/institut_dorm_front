@@ -31,6 +31,7 @@ const students = computed(() => studentStore.getAllStudent);
 const pagination = computed(() => studentStore.pagination);
 const countries = computed(() => countryStore.allCountry)
 const faculties = computed(() => facultyStore.getAllFaculty)
+const loading = computed(() => studentStore.loading)
 
 const genders = ref([
     { name: 'женшина', code: '0' },
@@ -93,7 +94,7 @@ const paginateHandle = (data) => {
 <template>
 
     <div class="card test_card">  
-        <DataTable :value="students" scrollable scrollHeight="calc(100vh - 300px)" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
+        <DataTable :value="students" scrollable scrollHeight="calc(100vh - 300px)" :loading="loading" class="p-datatable-sm" showGridlines tableStyle="min-width: 50rem">
             <Column header="#" headerStyle="width:3rem" frozen>
                 <template #body="slotProps">
                     {{ slotProps.index + 1 }}
@@ -119,7 +120,7 @@ const paginateHandle = (data) => {
             <Column field="gender" class="column-text-center text-center" headerClass="font-semibold" header="Пол" style="min-width: 100px">
                 <template #body="slotProps">
                     <span v-if="slotProps.data.gender == 0"> женшина </span>
-                    <span v-else>мужчиина</span>
+                    <span v-else>мужчина</span>
                 </template>
             </Column>
             <Column field="actions" header="!!!" style="min-width: 90px" class="column-text-center">
@@ -148,7 +149,7 @@ const paginateHandle = (data) => {
             <template #footer>
                 <div class="main_footer">
                     <div class="main_footer__pagination">
-                        <Paginator v-if="pagination.next" class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
+                        <Paginator v-if="pagination.next" :alwaysShow="false" class="custom_pagination" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
                     </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
@@ -165,18 +166,6 @@ const paginateHandle = (data) => {
 </template>
 
 <style lang="scss">
-
-.st_select {
-    .p-inputtext {
-        padding: 0.55rem 0.55rem !important;
-    }
-    ul {
-    .p-dropdown-panel {
-        padding: 0.1rem !important;
-        color: red !important;
-    } 
-    }
-}
 .custom_pagination {
     .p-paginator {
         padding: 0.1rem 0.1rem !important;

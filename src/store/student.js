@@ -6,7 +6,8 @@ export const useStudentStore = defineStore('student', {
     state: () => ({
         students: [],
         pagination: [],
-        typeStudents: []
+        typeStudents: [],
+        loading: false
     }),
 
     getters: {
@@ -18,14 +19,15 @@ export const useStudentStore = defineStore('student', {
 
     actions: {
         async setAllStudent(obj) {
-            console.log(obj, 'obj');
+            this.loading = true
             const res = await http.get(`/api/student`, {
                 params: {...obj}
             });
             const data = await res.data;
             this.students = data.results;
             this.pagination = data.pagination;
-            console.log(data);
+            this.loading = false
+            // console.log(data);
         },
 
         async addStudent(obj) {

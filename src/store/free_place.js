@@ -1,12 +1,15 @@
 import { defineStore } from 'pinia';
 import { http } from '@/api/axios/interceptors';
 import { useBuildingStore } from './building';
+import {useNotifyStore} from './notification'
 
+const notify = useNotifyStore()
 export const useFreePlaceStore = defineStore('free_place', {
     state: () => ({
         free_places: [],
         free_students: [],
-        pagination: []
+        pagination: [],
+        loading: false
     }),
 
     getters: {
@@ -17,28 +20,27 @@ export const useFreePlaceStore = defineStore('free_place', {
 
     actions: {
         async setAllFreePlace(obj) {
-            console.log(obj, 'obj');
+            this.loading = true
             const res = await http.get('/api/free-place', { params: obj });
             const data = await res.data;
             this.free_places = data.results;
+            console.log(this.free_places);
             this.pagination = data.pagination
-            const buildStore = useBuildingStore();
-            buildStore.$state.buildings = data.building;
+            this.loading = false
         },
 
         async addFreeBook(obj) {
-            console.log(obj, 'meeeeeeeeeeeeeee');
-            console.log(obj.apartment, 'apart');
             try {
                 const res = await http.post('/api/booking', obj.apartment);
                 const json = await res.data;
-                console.log(json, 'json');
                 const free_data = JSON.parse(JSON.stringify(this.free_places));
                 const idx = free_data.findIndex((elem) => elem.room_id == obj.apartment.room);
                 this.free_places[idx] = json.data;
                 obj.cb();
-            } catch (error) {
-                console.log(error);
+            } catch (err) {
+                const error = err.response.data.gender
+                obj.cb();
+                notify.addNotification({status:'error', message: error})
             }
         },
 

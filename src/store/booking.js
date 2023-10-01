@@ -4,7 +4,8 @@ import { defineStore } from 'pinia';
 export const useBookingStore = defineStore('booking', {
     state: () => ({
         bookings: [],
-        paginations: []
+        paginations: [],
+        loading: false
     }),
 
     getters: {
@@ -14,16 +15,18 @@ export const useBookingStore = defineStore('booking', {
 
     actions: {
         async setAllBooking(params) {
+            this.loading = true
             const res = await http.get('/api/booking', { params: params });
             const json = await res.data;
             this.bookings = json.results;
             this.paginations = json.pagination
+            this.loading = false
         },
 
         async addBook(obj) {
             const res = await http.post('/api/booking');
             const json = await res.data;
-            console.log(json);
+            console.log(json, 'zeselit');
         }
     }
 });

@@ -67,7 +67,7 @@ const buildHandle = (e) => {
                 <div class="field grid mt-1">
                     <label for="number" class="col-12 mb-2 md:col-2 md:mb-0 font-medium">Комната</label>
                     <div class="col-12 md:col-5 ml-4">
-                        <InputText id="number" v-model="roomState.number" type="search" :maxlength="4" size="small" />
+                        <InputText id="number" class="text-base" v-model="roomState.number" type="search" :maxlength="4" size="small" />
                     </div>
                 </div>
                 <div class="field grid">

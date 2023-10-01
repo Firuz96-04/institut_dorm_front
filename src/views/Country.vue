@@ -27,9 +27,13 @@ const editHandle = (data) => {
     openEdit.value = true;
     country.value = JSON.parse(JSON.stringify(data));
 };
+
+const exportExcel = () => {
+    countryStore.export()
+}
 </script>
 <template>
-    <div class="card" style="width: 850px; margin: 0 auto">
+    <div class="card" style="width: 850px; margin: 0 auto; padding: 1rem;">
         <DataTable class="p-datatable-sm" :value="countries" scrollable scrollHeight="500px" showGridlines tableStyle="min-width: 50rem">
             <ColumnGroup type="header">
                 <Row>
@@ -83,7 +87,7 @@ const editHandle = (data) => {
             <template #header>
                 <div class="header_block">
                     <div>
-                        <InputText v-model="name" type="text" size="small" :maxlength="8" placeholder="Страна" />
+                        <InputText v-model="name" class="text-base" type="text" size="small" :maxlength="8" placeholder="Страна" />
                     </div>
                     <div>
                         <Button label="Добавить" class="text-base py-2 px-3" @click="addHandle" size="small" raised />
@@ -94,7 +98,9 @@ const editHandle = (data) => {
                 <div class="main_footer">
                     <div class="main_footer__pagination"></div>
                     <div class="main_footer__export">
-                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
+                        <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" 
+                            @click="exportExcel"
+                        severity="success" label="Excel" aria-label="Submit" />
                     </div>
                 </div>
             </template>

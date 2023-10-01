@@ -18,32 +18,37 @@ buildStore.setAllBuilding();
 
 roomTypeStore.setAllRoomType()
 
+const loading = computed(() => roomStore.loading)
 const rooms = computed(() => roomStore.getAllRoom);
+const pagination = computed(() => roomStore.getAllPagination)
 const buildings = computed(() => buildStore.allBuilding);
 
 const room_filter = ref({
     room: null,
-    building: null
+    building: null,
+    gender: null
 });
 
 const isAdd = ref(false);
 const isEdit = ref(false);
 const isDelete = ref(false)
-const room = ref({});
+const roomEdit = ref({});
+const roomDelete = ref({});
+
+const selectedProduct = ref([])
 
 const editHandle = (data) => {
-    room.value = JSON.parse(JSON.stringify(data));
+    roomEdit.value = JSON.parse(JSON.stringify(data));
     isEdit.value = true;
 };
 
 const deleteHandle = (data) => {
+    roomDelete.value = JSON.parse(JSON.stringify(data))
     isDelete.value = true
-    room.value = JSON.parse(JSON.stringify(data))
 };
 
 const addHandle = () => {
     isAdd.value = true;
-    console.log('addHandle');
 };
 
 const filterHandle = (e) => {
@@ -70,14 +75,23 @@ const paginateHandle = (data) => {
     console.log(data);
 }
 
+const roomGenderList = [
+    {name:'женские', code: 0},
+    {name:'мужские', code: 1},
+    {name:'незаселенные', code: 2},
+]
+
 </script>
 <template>
     <div class="card" style="padding: 1rem">
-        <DataTable :value="rooms" class="p-datatable-sm" scrollHeight="calc(100vh - 250px)"
+        <DataTable v-model:selection="selectedProduct" :value="rooms"
+        :loading="loading"
+        class="p-datatable-sm my-table" scrollHeight="calc(100vh - 250px)"
         scrollable showGridlines tableStyle="min-width: 40rem">
             <ColumnGroup type="header">
                 <Row>
                     <Column header="#" :rowspan="2" class="column-text-center"/>
+                    <Column selectionMode="multiple" class="column-text-center"  headerStyle="width: 2rem" :rowspan="2"></Column>
                     <Column header="Комната" headerClass="font-medium" class="column-text-center" :rowspan="2" />
                     <Column header="Этаж" headerClass="font-medium" class="column-text-center" :rowspan="2" />
                     <Column header="Тип комнаты" headerClass="font-medium" class="column-text-center" :rowspan="2" />
@@ -94,12 +108,12 @@ const paginateHandle = (data) => {
                     {{ slotProps.index + 1 }}
                 </template>
             </Column>
+            <Column selectionMode="multiple" class="text-center" headerStyle="width: 3rem"></Column>
             <Column field="number" class="text-center" style="min-width: 150px;"></Column>
             <Column field="floor" class="text-center" style="min-width: 100px"></Column>
             <Column field="room_type.place" class="text-center" style="min-width: 100px"></Column>
             <Column field="building_name" class="text-center" style="min-width: 150px"></Column>
             <Column field="room_type.place" class="text-center" style="min-width: 100px"></Column>
-
             <Column field="actions" header="!!!" style="width: 80px">
                 <template #body="{ data }">
                     <div class="action_style">
@@ -121,8 +135,18 @@ const paginateHandle = (data) => {
                             optionValue="code"
                             placeholder="Здания"
                             class="st_select w-full md:w-12rem ml-4"
-                            size="small"
-                            
+                            size="small"    
+                        />
+                        <Dropdown
+                            v-model="room_filter.gender"
+                            :options="roomGenderList"
+                            @change="filterHandle"
+                            showClear
+                            optionLabel="name"
+                            optionValue="code"
+                            placeholder="тип комната"
+                            class="st_select w-full md:w-14rem ml-4"
+                            size="small"  
                         />
                     </div>
                     <div>
@@ -133,7 +157,7 @@ const paginateHandle = (data) => {
             <template #footer>
                 <div class="main_footer">
                     <div class="main_footer__pagination">
-                        <Paginator class="custom_pagination" @page="paginateHandle" :rows="10" :totalRecords="52"></Paginator>
+                        <Paginator class="custom_pagination" :alwaysShow="false" @page="paginateHandle" :rows="pagination.page_size" :totalRecords="pagination.total"></Paginator>
                     </div>
                     <div class="main_footer__export">
                         <Button class="py-1 px-2 my_icon" icon="pi pi-file-excel" severity="success" label="Excel" aria-label="Submit" />
@@ -144,8 +168,8 @@ const paginateHandle = (data) => {
     </div>
     <Teleport to="body">
         <addRoom :visible="isAdd" @close="closeModal" />
-        <editRoom :visible="isEdit" @close="closeModal" :room="room" />
-        <deleteRoom :visible="isDelete" @close="closeModal" :room="room"/>
+        <editRoom :visible="isEdit" @close="closeModal" :room="roomEdit" />
+        <deleteRoom :visible="isDelete" @close="closeModal" :room="roomDelete"/>
     </Teleport>
 </template>
 
@@ -176,7 +200,6 @@ const paginateHandle = (data) => {
     display: flex;
     justify-content: space-between;
 
-    &__filter {
-    }
 }
+
 </style>

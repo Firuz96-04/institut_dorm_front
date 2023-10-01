@@ -2,6 +2,7 @@
 import { ref, defineProps, defineEmits } from 'vue';
 import { useCountryStore } from '@/store/country';
 
+const countryStore = useCountryStore();
 const props = defineProps({
     visible: {
         type: Boolean,
@@ -18,6 +19,10 @@ const emit = defineEmits({
 });
 
 const deleteHandle = () => {
+    countryStore.countryDelete({
+        id: props.country.id,
+        cb: closeModal
+    })
     console.log('delete');
 }
 

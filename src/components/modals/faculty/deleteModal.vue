@@ -2,6 +2,9 @@
 import { ref, defineProps, defineEmits } from 'vue';
 import { useFacultyStore } from '@/store/faculty';
 
+
+const facultyStore = useFacultyStore();
+
 const props = defineProps({
     visible: {
         type: Boolean,
@@ -17,12 +20,17 @@ const emit = defineEmits({
     close: null
 });
 
-const deleteHandle = () => {
-    console.log('delete');
-};
-
 const closeModal = () => {
     emit('close');
+};
+
+
+const deleteHandle = () => {
+    facultyStore.facultyDelete({
+        id: props.faculty.id,
+        cb: closeModal
+    })
+    console.log('delete');
 };
 
 
