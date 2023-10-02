@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // createWebHashHistory
 import AppLayout from '@/layout/AppLayout.vue';
-
+import Login from '@/views/pages/auth/Login.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -66,11 +66,6 @@ const router = createRouter({
                     path: '/employee',
                     name: 'employee',
                     component: () => import('@/views/Employee.vue')
-                },
-                {
-                    path: '/xabar',
-                    name: 'xabar',
-                    component: () => import('@/views/Message.vue')
                 }
             ]
         },
@@ -82,7 +77,7 @@ const router = createRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import('@/views/pages/auth/Login.vue')
+            component: Login
         }
     ]
 });

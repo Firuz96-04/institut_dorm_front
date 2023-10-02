@@ -37,8 +37,6 @@ const handleLogin = () => {
             console.log(err, 'catch ccccccccc');
     })
 }
-
-console.log('meee');
 authStore.loggedIn ? router.push('/') : false
 
 console.log(authStore.loggedIn);
@@ -55,13 +53,13 @@ console.log(authStore.loggedIn);
 
                     <form @submit.prevent="handleLogin">
                         <label for="email1" class="block text-900 text-xl font-medium mb-2">Email</label>
-                        <InputText id="email1" type="search" placeholder="Email адрес" class="w-full md:w-25rem mb-5 font-medium text-base" 
+                        <InputText id="email1" type="search" placeholder="Email адрес" class="w-full md:w-25rem mb-5 font-medium text-lg" 
                             :maxlength="30"
-                        style="padding: 1rem" v-model="user.email" />
+                         v-model="user.email" />
 
                         <label for="password1" class="block text-900 font-medium text-xl mb-2">Пароль</label>
                         <Password id="password1" v-model="user.password" :maxlength="20" placeholder="Пароль"
-                         :feedback="false" :toggleMask="true" class="w-full mb-3" inputClass="w-full font-medium text-base" :inputStyle="{ padding: '1rem' }"></Password>
+                         :feedback="false" :toggleMask="true" class="w-full mb-3" inputClass="w-full font-medium text-lg" />
 
                         <!-- <div class="flex align-items-center justify-content-between mb-5 gap-5">
                             <div class="flex align-items-center">

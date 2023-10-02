@@ -144,10 +144,10 @@ const searchStudent = (e) => {
             <Column field="full_name" style="min-width: 220px;" frozen>
                 <template #body="{ data }"> {{ data.student.full_name }} </template>
             </Column>
-            <Column field="country" style="min-width: 170px" >
+            <Column field="country" style="min-width: 170px"  class="text-center">
                 <template #body="{ data }"> {{ data.student.country.name }} </template>
             </Column>
-            <Column field="faculty" style="min-width: 170px">
+            <Column field="faculty" style="min-width: 170px" class="text-center">
                 <template #body="{ data }"> {{ data.student.faculty.name }} </template>
             </Column>
             <Column field="student.course" style="min-width: 70px" class="text-center" />

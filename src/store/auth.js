@@ -1,4 +1,3 @@
-// import { http } from '@/api/axios/interceptors';
 import { defineStore } from 'pinia';
 import AuthService from '@/service/auth-service'
 
@@ -9,7 +8,7 @@ const user = JSON.parse(localStorage.getItem('user'));
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        user: null,
+        user: user,
         loggedIn: false,
         user: null
     }),
@@ -31,6 +30,12 @@ export const useAuthStore = defineStore('auth', {
                 }
             );
         },
+
+        refreshToken(accessToken) {
+            this.loggedIn = true
+            const test_obj = {...this.user, accessToken:accessToken}
+            console.log(test_obj, 'test refresh');
+        }
     //    async login(user) {
     //     try {
     //       const res = await AuthService.login(user)

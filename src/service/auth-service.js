@@ -2,14 +2,6 @@ import {http} from '../api/axios/interceptors'
 import instances from '@/api/axios/instances'
 class AuthService{
 
-    // signin() {
-    //     return http.post("/api/token/", {
-    //         email: "lll@gmail.com",
-    //         password: "lll_12345",
-    //     });
-    // }
-
-
     login(user) {
         return instances.post("/api/token/", {
                         email: user.email,
@@ -17,7 +9,6 @@ class AuthService{
                         })
                 .then(response => {
                     if(response.data.access) {
-                        console.log('is success');
                         const person = JSON.stringify(response.data)
                         localStorage.setItem('user', person)
                         const { access, refresh } = response.data;
@@ -25,13 +16,10 @@ class AuthService{
                         localStorage.setItem("accessToken", access);
                         localStorage.setItem("refreshToken", refresh);     
                     }
-                    console.log('is success return');
                     return response.data
                 })
                 .catch(error => {
-                    console.log(error, 'my error');
                         return Promise.reject(error)
-                        // console.log(error, 'error');
                 })
     }
 
