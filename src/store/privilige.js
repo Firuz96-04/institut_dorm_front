@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
-
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 export const usePriviligeStore = defineStore('privilige', {
     state: () => ({
         priviliges: []
@@ -12,14 +12,14 @@ export const usePriviligeStore = defineStore('privilige', {
 
     actions: {
         async setAllPrivilige() {
-            const res = await http.get('/api/privilege');
+            const res = await api.get('/api/privilege');
             const data = await res.data;
             this.priviliges = data;
         },
         
         async addPrivilige(obj) {
             try {
-                const res = await http.post('/api/privilege', obj.privilige);
+                const res = await api.post('/api/privilege', obj.privilige);
                 const json = await res.data;
                 this.priviliges.push(json.data);
                 obj.cb();
@@ -30,7 +30,7 @@ export const usePriviligeStore = defineStore('privilige', {
 
         async editPrivilige(obj) {
             try {
-                const res = await http.patch(`/api/privilege/${obj.privilige.id}`, obj.privilige);
+                const res = await api.patch(`/api/privilege/${obj.privilige.id}`, obj.privilige);
                 const data = await res.data;
                 const item_id = this.priviliges.findIndex(item => item.id == obj.privilige.id)
                 this.priviliges[item_id] = obj.privilige
@@ -41,7 +41,7 @@ export const usePriviligeStore = defineStore('privilige', {
         },
         async deletePrivilige(obj) {
             try {
-                const res = await http.delete(`/api/privilege/${obj.id}`);
+                const res = await api.delete(`/api/privilege/${obj.id}`);
                 const data = await res.data;
                 const item_id = this.priviliges.findIndex(item => item.id == obj.id)
                 this.priviliges.splice(item_id, 1)

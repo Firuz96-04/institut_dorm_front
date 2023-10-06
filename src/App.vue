@@ -1,11 +1,30 @@
 <script setup>
-import {computed} from 'vue'
+import {computed, onMounted, onBeforeMount} from 'vue'
 import Message from 'primevue/message';
 import {useNotifyStore} from '@/store/notification'
-
+import EventBus  from '@/common/EventBus'
+import {useAuthStore} from '@/store/auth'
+import { useRouter } from 'vue-router';
+const authStore = useAuthStore()
 const notifyStore = useNotifyStore()
 
 const notifications = computed(() => notifyStore.getNotification) 
+const router = useRouter();
+
+const logOut = () => {
+    authStore.logout()
+    router.push('login')
+}
+
+onMounted(() => {
+    EventBus.on("logout", () => {
+        logOut();
+    });
+})
+
+onBeforeMount(() => {
+    EventBus.remove("logout");
+})
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import {useNotifyStore} from './notification'
 import ProductService from '../service/RoomService'
 const notify = useNotifyStore()
@@ -21,8 +22,8 @@ export const useRoomStore = defineStore('room', {
 
         async setAllRoom(params) {
             this.loading = true
-            ProductService.sayHello()
-            const res = await http.get('/api/room', {
+            // ProductService.sayHello()
+            const res = await api.get('/api/room', {
                 params: params
             });
             const data = await res.data;
@@ -33,14 +34,13 @@ export const useRoomStore = defineStore('room', {
 
         async addRoom(obj) {
             try {
-                const res = await http.post('/api/room', obj.room);
+                const res = await api.post('/api/room', obj.room);
                 const data = await res.data;
                 this.rooms.push(data);
             
                 obj.cb();
             } catch (err) {
                 const {error} = err.response.data
-                console.log(err.response, 'res');
                 obj.cb();
                 notify.addNotification({status:'error', message: error})
             }
@@ -49,7 +49,7 @@ export const useRoomStore = defineStore('room', {
         
         async roomEdit(obj) {
             try {
-                const res = await http.patch(`/api/room/${obj.room.id}`, obj.room);
+                const res = await api.patch(`/api/room/${obj.room.id}`, obj.room);
                 const data = await res.data;
                 const item_id = this.rooms.findIndex(item => item.id == obj.room.id)
                 this.rooms[item_id] = data
@@ -63,7 +63,7 @@ export const useRoomStore = defineStore('room', {
 
         async roomDelete(obj) {
             try {
-                const res = await http.delete(`/api/room/${obj.id}`);
+                const res = await api.delete(`/api/room/${obj.id}`);
                 const data = await res.data;
                 const item_id = this.rooms.findIndex(item => item.id == obj.id)
                 this.rooms.splice(item_id, 1)

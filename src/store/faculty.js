@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import {getDate} from '../helpers/get_date'
 import {useNotifyStore} from './notification'
 
@@ -21,13 +22,13 @@ export const useFacultyStore = defineStore('faculty', {
 
     actions: {
         async setAllFaculty() {
-            const res = await http.get('/api/faculty');
+            const res = await api.get('/api/faculty');
             const data = await res.data;
             this.faculties = data;
         },
 
         async facultyTotal() {
-            const res = await http.get('/api/faculty/total');
+            const res = await api.get('/api/faculty/total');
             const data = await res.data;
             this.faculty_total = data.data;
             this.total = data.totals;
@@ -35,7 +36,7 @@ export const useFacultyStore = defineStore('faculty', {
 
         async addFaculty(obj) {
             try {
-                const res = await http.post('/api/faculty', obj.faculty);
+                const res = await api.post('/api/faculty', obj.faculty);
                 const data = await res.data;
                 this.faculty_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
@@ -43,7 +44,6 @@ export const useFacultyStore = defineStore('faculty', {
                 // toast.add({ severity: 'success', summary: 'Факультет', detail: 'Добавлен', life: 3000 });
             } catch (err) {
                 const {error} = err.response.data
-                console.log(err.response, 'res');
                 obj.cb();
                 notify.addNotification({status:'error', message: error})
             }
@@ -51,7 +51,7 @@ export const useFacultyStore = defineStore('faculty', {
 
         async facultyEdit(obj) {
             try {
-                const res = await http.patch(`/api/faculty/${obj.faculty.id}`, {
+                const res = await api.patch(`/api/faculty/${obj.faculty.id}`, {
                     name: obj.faculty.name
                 });
                 const data = await res.data;
@@ -66,14 +66,13 @@ export const useFacultyStore = defineStore('faculty', {
 
         async facultyDelete(obj) {
             try {
-                const res = await http.delete(`/api/faculty/${obj.id}`);
+                const res = await api.delete(`/api/faculty/${obj.id}`);
                 const data = await res.data;
                 const item_id = this.faculty_total.findIndex(item => item.id == obj.id)
                 this.faculty_total.splice(item_id, 1)
                 obj.cb();
             } catch (err) {
                 const {error} = err.response.data
-                console.log(err.response);
                 obj.cb();
                 notify.addNotification({status:'error', message: error})
             }

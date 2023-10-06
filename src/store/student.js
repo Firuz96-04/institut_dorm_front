@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import { useFacultyStore } from './faculty';
 import { useCountryStore } from './country';
 export const useStudentStore = defineStore('student', {
@@ -13,14 +14,13 @@ export const useStudentStore = defineStore('student', {
     getters: {
         getAllStudent: (state) => state.students,
         getStudentType: (state) => state.typeStudents,
-
         getPagination: (state) => state.pagination
     },
 
     actions: {
         async setAllStudent(obj) {
             this.loading = true
-            const res = await http.get(`/api/student`, {
+            const res = await api.get(`/api/student`, {
                 params: {...obj}
             });
             const data = await res.data;
@@ -32,7 +32,7 @@ export const useStudentStore = defineStore('student', {
 
         async addStudent(obj) {
             try {
-                const res = await http.post('/api/student', obj.student);
+                const res = await api.post('/api/student', obj.student);
                 const data = await res.data;
 
                 this.setAllStudent({page: 1})

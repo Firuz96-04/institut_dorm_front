@@ -3,10 +3,12 @@ import axios from 'axios';
 let baseURL = '';
 
 if (process.env.NODE_ENV == 'prodcution') {
-    baseURL = 'http://localhost:8000'
+    baseURL = 'https://ttjapi.buxdtu.uz'
 } else {
-    baseURL = 'http://localhost:8000'
+    baseURL = 'https://ttjapi.buxdtu.uz'
 }
+
+// https://ttjapi.buxdtu.uz
 
 const instance = axios.create({
     baseURL: baseURL,

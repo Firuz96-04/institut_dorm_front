@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import {useNotifyStore} from './notification'
 
 const notify = useNotifyStore()
@@ -17,7 +18,7 @@ export const useBuildingStore = defineStore('building', {
     actions: {
         async setAllBuilding() {
             this.loading = true
-            const res = await http.get('/api/building');
+            const res = await api.get('/api/building');
             const data = await res.data;
             this.buildings = data;
             this.loading = false
@@ -25,11 +26,10 @@ export const useBuildingStore = defineStore('building', {
 
         async addBuilding(obj) {
             try {
-                const res = await http.post('/api/building', obj.building);
+                const res = await api.post('/api/building', obj.building);
                 const data = await res.data;
                 this.buildings.push(data);
                 obj.cb();
-                console.log(data);
             } catch (err) {
                 const {error} = err.response.data
                 obj.cb();
@@ -39,7 +39,7 @@ export const useBuildingStore = defineStore('building', {
 
         async deleteBuilding(obj) {
             try {
-                const res = await http.delete(`/api/building/${obj.id}`);
+                const res = await api.delete(`/api/building/${obj.id}`);
                 const data = await res.data;
                 const build_id = this.buildings.findIndex(item => item.id == obj.id)
                 this.buildings.splice(build_id, 1)
@@ -54,7 +54,7 @@ export const useBuildingStore = defineStore('building', {
         async editBuilding(obj) {
             const principal = obj.building.principal?.id
             try {
-                const res = await http.patch(`/api/building/${obj.building.id}`, {...obj.building, principal});
+                const res = await api.patch(`/api/building/${obj.building.id}`, {...obj.building, principal});
                 const data = await res.data;
                 const item_id = this.buildings.findIndex(item => item.id == obj.building.id)
                 this.buildings[item_id] = data.data

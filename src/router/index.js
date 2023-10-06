@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // createWebHashHistory
 import AppLayout from '@/layout/AppLayout.vue';
-import Login from '@/views/pages/auth/Login.vue'
+// import Login from '@/views/pages/auth/Login.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -70,14 +70,9 @@ const router = createRouter({
             ]
         },
         {
-            path: '/pages/notfound',
-            name: 'notfound',
-            component: () => import('@/views/pages/NotFound.vue')
-        },
-        {
             path: '/login',
             name: 'login',
-            component: Login
+            component: () => import('@/views/pages/auth/Login.vue')
         }
     ]
 });

@@ -3,7 +3,6 @@ import { useLayout } from '@/layout/composables/layout';
 import { ref, computed } from 'vue';
 import {useAuthStore} from '@/store/auth'
 import {useRouter} from 'vue-router'
-const { layoutConfig } = useLayout();
 const user = ref({
     email: null,
     password: null
@@ -11,11 +10,6 @@ const user = ref({
 
 const router = useRouter()
 const authStore = useAuthStore()
-
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
-
 const loading = ref(false)
 
 // const logoUrl = computed(() => {
@@ -34,12 +28,12 @@ const handleLogin = () => {
             console.log('message', error);
         }
     ).catch(err => {
-            console.log(err, 'catch ccccccccc');
+            console.log(err, 'catch');
     })
 }
 authStore.loggedIn ? router.push('/') : false
 
-console.log(authStore.loggedIn);
+// console.log(authStore.loggedIn);
 </script>
 
 <template>

@@ -10,7 +10,7 @@ const props = defineProps({
         requiered: false
     }
 });
-const value1 = ref(0)
+
 const emits = defineEmits({
     close: null
 })
@@ -45,7 +45,6 @@ const addPayment = () => {
     })
 }
 
-console.log('this is modal');
 
 </script>
 <template>

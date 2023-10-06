@@ -59,7 +59,7 @@ const items = ref([
         label: 'Настройки',
         icon: 'pi pi-fw pi-cog',
         command: () => {
-            console.log('Settings');
+           
         }
     },
     { separator: true },
@@ -69,7 +69,6 @@ const items = ref([
         command: () => {
             authStore.logout()
             router.push('login')
-            console.log('Settings');
         }
     }
 ]);
@@ -101,10 +100,10 @@ const menu = ref();
                 <Menu ref="menu" id="overlay_menu" :model="items" :popup="true">
                     <template #start>
                         <button class="w-full p-link flex align-items-center p-2 pl-3 text-color hover:surface-200 border-noround">
-                            <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="mr-2" shape="circle" />
+                            <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" class="mr-2" shape="circle" /> -->
                             <div class="flex flex-column align">
-                                <span class="font-bold">Amy Elsner</span>
-                                <span class="text-sm">Agent</span>
+                                <span class="font-bold">Админ</span>
+                                <!-- <span class="text-sm">Agent</span> -->
                             </div>
                         </button>
                     </template>

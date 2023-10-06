@@ -1,4 +1,5 @@
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import { defineStore } from 'pinia';
 import {getDate} from '../helpers/get_date'
 import {useNotifyStore} from './notification'
@@ -20,14 +21,13 @@ export const useCountryStore = defineStore('country', {
 
     actions: {
         async setAllCountry() {
-            const res = await http.get('/api/country');
+            const res = await api.get('/api/country');
             const data = await res.data;
             this.countries = data;
-            console.log(data);
         },
 
         async countryTotal() {
-            const res = await http.get('/api/country/total');
+            const res = await api.get('/api/country/total');
             const data = await res.data;
             this.country_total = data.data;
             this.total = data.totals;
@@ -35,7 +35,7 @@ export const useCountryStore = defineStore('country', {
 
         async addCountry(obj) {
             try {
-                const res = await http.post('/api/country', obj.country);
+                const res = await api.post('/api/country', obj.country);
                 const data = await res.data;
                 this.country_total.push({ ...data, student_count: 0, booking_count: 0 });
                 obj.cb();
@@ -49,7 +49,7 @@ export const useCountryStore = defineStore('country', {
 
         async countryEdit(obj) {
             try {
-                const res = await http.patch(`/api/country/${obj.country.id}`, {
+                const res = await api.patch(`/api/country/${obj.country.id}`, {
                     name: obj.country.name
                 });
                 const data = await res.data;
@@ -64,13 +64,12 @@ export const useCountryStore = defineStore('country', {
 
         async countryDelete(obj) {
             try {
-                const res = await http.delete(`/api/country/${obj.id}`);
+                const res = await api.delete(`/api/country/${obj.id}`);
                 const data = await res.data;
                 const item_id = this.country_total.findIndex(item => item.id == obj.id)
                 this.country_total.splice(item_id, 1)
                 obj.cb();
             } catch (error) {
-                console.log(error.response);
                 obj.cb();
                 notify.addNotification({status:'error', message: 'message'})
             }

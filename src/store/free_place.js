@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { http } from '@/api/axios/interceptors';
-import { useBuildingStore } from './building';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import {useNotifyStore} from './notification'
 
 const notify = useNotifyStore()
@@ -21,17 +21,16 @@ export const useFreePlaceStore = defineStore('free_place', {
     actions: {
         async setAllFreePlace(obj) {
             this.loading = true
-            const res = await http.get('/api/free-place', { params: obj });
+            const res = await api.get('/api/free-place', { params: obj });
             const data = await res.data;
             this.free_places = data.results;
-            console.log(this.free_places);
             this.pagination = data.pagination
             this.loading = false
         },
 
         async addFreeBook(obj) {
             try {
-                const res = await http.post('/api/booking', obj.apartment);
+                const res = await api.post('/api/booking', obj.apartment);
                 const json = await res.data;
                 const free_data = JSON.parse(JSON.stringify(this.free_places));
                 const idx = free_data.findIndex((elem) => elem.room_id == obj.apartment.room);
@@ -45,7 +44,7 @@ export const useFreePlaceStore = defineStore('free_place', {
         },
 
         async setAllFreeStudent(obj) {
-            const res = await http.get('/api/free-place/find_student', { params: obj });
+            const res = await api.get('/api/free-place/find_student', { params: obj });
             const data = await res.data;
             this.free_students = data.data;
         }

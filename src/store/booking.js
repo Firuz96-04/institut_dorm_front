@@ -1,4 +1,5 @@
-import { http } from '@/api/axios/interceptors';
+// import { http } from '@/api/axios/interceptors';
+import api from '@/api/axios/instances'
 import { defineStore } from 'pinia';
 
 export const useBookingStore = defineStore('booking', {
@@ -16,7 +17,7 @@ export const useBookingStore = defineStore('booking', {
     actions: {
         async setAllBooking(params) {
             this.loading = true
-            const res = await http.get('/api/booking', { params: params });
+            const res = await api.get('/api/booking', { params: params });
             const json = await res.data;
             this.bookings = json.results;
             this.paginations = json.pagination
@@ -24,9 +25,8 @@ export const useBookingStore = defineStore('booking', {
         },
 
         async addBook(obj) {
-            const res = await http.post('/api/booking');
+            const res = await api.post('/api/booking');
             const json = await res.data;
-            console.log(json, 'zeselit');
         }
     }
 });

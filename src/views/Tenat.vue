@@ -41,7 +41,6 @@ const close = () => {
 }
 
 const paginateHandle = (data) => {
-    console.log(data, 'data');
     tenat_filter.value.page = data.page + 1
     bookStore.setAllBooking(tenat_filter.value);
 }
@@ -49,7 +48,6 @@ const paginateHandle = (data) => {
 const showTenat = (event) => {
     const column = event.originalEvent.target.textContent;
     const {debt} = event.data
-    console.log(debt, 'debt');
     if(column != '') {
         const {data} = event
         const {id, student, room} = JSON.parse(JSON.stringify(data))
